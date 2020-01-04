@@ -1,0 +1,66 @@
+Un sistema web, permitirá que podrá accederse desde cualquier lugar con acceso a internet
+Evitara un gasto mayor como una pc o laptop.
+
+Usuarios
+-Admin
+-Jefa o encargada. 
+-Empleadas, un usuario para cada una de ellas.
+
+Cita
+-Se especifica el servicio para que los empleados tengan un apróximado de cuanto de pueden tardar.
+-Se muestran las citas del dia, asi de una vez puede observar las que tiene para el dia seleccionado.
+-Los datos se mostraran ordenados por hora.
+-Actualizar es para modificar datos, generalmente se ocupara para cambiar hora y fecha. 
+-¿Que otros datos necesita para agendar una cita o que desea que se muestren? 
+
+Inventario
+-Se puede dejar la fecha, porque el precio varia, pero algunos datos pueden guardar precios antetiores. (Es para no modificar los reportes pasados)
+-Botón de buscar, para facilitar la busqueda.
+-Se muestran todos los productos en un listado. 
+-¿Desea generar un código para los productos?
+
+Venta
+-En servicios se especifica el trabajo que se realiza Corte, Uñas, Alisado
+-Se deja el precio como un valor de entrada porque cada trabajo puede ser distinto.
+-Habrá una seccion por si se desea añadir un producto, por eso tendra un checkbox, desplegara el listado de productos disponibles en el inventario y sea agregara la cantidad.
+-Es opcional agregar el empleado que la atendio. 
+-La fecha y hora la tomara automaticamente del sistema.
+-Se puede añadir una ventana emergente para dar el vuelto a la hora de guardar.
+-La venta va a generar un correlativo.
+Anulacion de venta.
+-Se buscara de acuerdo al codigo. 
+-Mostrara un mensaje si el código ingresado no existe
+-Mostrara un mensaje si hubo alguna anulación. 
+-Mostrara un mensaje de confirmación para anular una venta.
+-¿A que cosas le incluye el IVA?
+-¿Desea llevar solo el registro de los productos y de los servicios tambien? 
+
+Reporte
+-Se mostrara por separado los servicios y los productos. 
+-Se mostrara en pantalla los datos y luego generara un archivo pdf para que se pueda imprimir.
+-Si lo desea se puede hacer filtrado la fecha. (Elegir un rango de fechas)
+
+Usuario
+-Permite agregar usuarios, el unico rol que permite es el de empleado.
+-Podra actualizar o elminar cualquier usuario.
+-Podemos agregar mas roles
+-Desde aca se le dan los permisos a un usuario
+-Solo la jefa tiene acceso a modificar o eliminar productos del inventario.
+
+¿Que cosas necesita automatizar?
+¿Cual es la plataforma que ocupa para las citas en fb?
+
+Recomendar el uso de la impresora. Preguntar si desea que la consigamos
+Tendriamos que cotizar, nueva o usada. 
+$50 servidor
+$20 dominio
+
+$60 por modulo.
+
+¿Qué información necesita para reservar una cita?
+¿El inventario será necesario ingresarle un código?
+La venta solo la mostrara indicando, los articulos o trabajos
+La recomendacion es solo imprimir una vez al dia, un reporte con la venta o trabajos. 
+
+Hacer un pequeño contrato, especificando cada uno de los puntos que el sistema va a tener, evitando así, que al final del proyecto el cliente pida más funciones de las estipuladas al inicio del desarrollo. 
+
