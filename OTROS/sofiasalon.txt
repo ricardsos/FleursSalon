@@ -3,7 +3,7 @@ Evitara un gasto mayor como una pc o laptop.
 
 Usuarios
 -Admin
--Jefa o encargada. 
+-Jefa, encargada. 
 -Empleadas, un usuario para cada una de ellas.
 
 Cita
