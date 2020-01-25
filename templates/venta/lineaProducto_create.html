@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<h1>Nuevo Producto</h1>
+<form action="" method="post">{% csrf_token %}
+
+    Productos
+    <select name="producto" id="producto">
+        {% for p in productos %}
+        <option value="{{ p.nombre }}">{{ p.nombre }}</option>
+        {% endfor %}
+    </select>
+
+    Precio $
+    <br><br>
+    Cantidad <input type="number" name="cantidad" id="cantidad"><br><br>
+
+
+    <input type="checkbox" name="check" onClick="habilitar()"> Descuento (%)
+    <input type="text" name="descuento" id="descuento" disabled><br><br>
+
+    Nuevo precio <input type="text" name="nuevoprecio" id="nuevoprecio">
+    <br><br>
+
+    Subtotal <input type="text" name="subtotal" id="subtotal">
+    <br><br>
+    <input type="submit" value="Agregar"><br><br>
+</form>
+
+</body>
+
+<script>
+    function habilitar(){
+        var desc = document.getElementById('descuento');
+        desc.disabled = !desc.disabled
+    }
+</script>
+</html>
