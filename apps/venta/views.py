@@ -2,12 +2,21 @@ from django.shortcuts import render, redirect
 from .models import Venta, Servicio, Colaborador, LineaDeServicio, LineaDeProducto, Producto
 from datetime import datetime, date
 
+from .models import *
+from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
+from django.core import serializers
+import json
+
 
 # Create your views here.
 # VENTAS
 # Se crea una Venta con Estado "No Guardada"
 def venta_list(request):
 	ventas = Venta.objects.all()
+def facturar(request):
+    
+    return render(request, 'venta/facturar.html')
 
 	if request.method == 'POST':
 		venta = Venta()
