@@ -8,10 +8,11 @@
 Código: {{ venta.codigo }} <br>
 Fecha: {{ venta.fecha }}<br>
 Cliente: {{ venta.cliente }} <br>
-TOTAL: {{ venta.total }}<br><br>
+TOTAL: $ {{ venta.total }}<br><br>
 
 <a href="{% url 'venta:venta_list' %}">Atrás</a><br>
 
+{% if lineasServicio %}
     <h1>Servicios</h1>
     <table>
      <tr>
@@ -35,7 +36,9 @@ TOTAL: {{ venta.total }}<br><br>
     </tr>
     {% endfor %}
 </table>
+{% endif %}
 
+{% if lineasProducto %}
     <h1>Productos</h1>
     <table>
      <tr>
@@ -57,5 +60,7 @@ TOTAL: {{ venta.total }}<br><br>
     </tr>
     {% endfor %}
 </table>
+{% endif %}
+
 </body>
 </html>

@@ -7,15 +7,16 @@
 <body>
 Código: {{ venta.codigo }} <br>
 Fecha: {{ venta.fecha }}<br>
-Cliente: {{ venta.cliente }} <br>
-TOTAL: {{ venta.total }}<br><br>
+Cliente: <input type="text" name="cliente" size="100" value="{{ venta.cliente }}" required><br>
+TOTAL: $ {{ venta.total }}<br><br>
 
-        <a href="{% url 'venta:lineaServicio_create' %}">Agregar Servicio</a><br><br>
+        <a href="{% url 'venta:lineaServicio_create_edit' venta.id %}">Agregar Servicio</a><br><br>
 
         <a href="">Agregar Producto</a><br><br>
 
 <a href="{% url 'venta:venta_list' %}">Atrás</a><br>
 
+{% if lineasServicio %}
     <h1>Servicios</h1>
     <table>
      <tr>
@@ -40,7 +41,9 @@ TOTAL: {{ venta.total }}<br><br>
     </tr>
     {% endfor %}
 </table>
+{% endif  %}
 
+{% if lineasProducto %}
     <h1>Productos</h1>
     <table>
      <tr>
@@ -66,5 +69,7 @@ TOTAL: {{ venta.total }}<br><br>
     </tr>
     {% endfor %}
 </table>
+{% endif  %}
+
 </body>
 </html>

@@ -6,7 +6,7 @@ from django.core.validators import MinValueValidator
 
 class Producto(models.Model):
 	nombre = models.CharField('Nombre', max_length=100, blank=False, null=False)
-	precio = models.DecimalField('Precio unitario', max_digits=5, decimal_places=2, blank=False, null=False)
+	precio = models.DecimalField('Precio unitario', max_digits=10, decimal_places=2, blank=False, null=False)
 	estado = models.BooleanField()
 	activo = models.BooleanField()
 

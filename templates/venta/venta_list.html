@@ -18,8 +18,6 @@
             <th>Fecha</th>
             <th>Cliente</th>
             <th>Total</th>
-            <th>Anulada</th>
-            <th>Estado</th>
             <th colspan="3" >Acciones</th>
         </tr>
     {% for v in ventas %}
@@ -29,8 +27,7 @@
             <td>{{ v.fecha }}</td>
             <td>{{ v.cliente }}</td>
             <td>{{ v.total }}</td>
-            <td>{{ v.anulado }}</td>
-            <td>{{ v.estado }}</td>
+
             <td><a href="{% url 'venta:venta_show' v.id %}">Ver</a></td>
             <td><a href="{% url 'venta:venta_edit' v.id %}">Editar</a></td>
             <td><a href="{% url 'venta:venta_delete' v.id %}">Eliminar</a></td>

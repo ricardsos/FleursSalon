@@ -7,15 +7,16 @@
 <body>
 <form action="" method="post">{% csrf_token %}
     <h1>¿Desea eliminar la venta del cliente "{{ venta.cliente }}"?</h1>
-    <button type="submit">Eliminar</button>
+    <button type="submit">Eliminar</button> <a href="{% url 'venta:venta_list' %}">Atrás</a><br>
     <br><br>
 </form>
 
 Código: {{ venta.codigo }} <br>
 Fecha: {{ venta.fecha }}<br>
 Cliente: {{ venta.cliente }} <br>
-TOTAL: {{ venta.total }}
+TOTAL: $ {{ venta.total }}
 
+{% if lineasServicio %}
 <h1>Servicios</h1>
 <table>
      <tr>
@@ -37,9 +38,10 @@ TOTAL: {{ venta.total }}
     </tr>
     {% endfor %}
 </table>
+{% endif %}
 
-
-    <h1>Productos</h1>
+{% if lineasProducto %}
+<h1>Productos</h1>
 <table>
      <tr>
         <th>Producto</th>
@@ -60,6 +62,7 @@ TOTAL: {{ venta.total }}
     </tr>
     {% endfor %}
 </table>
+{% endif %}
 
 
 </body>

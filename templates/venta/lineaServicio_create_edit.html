@@ -31,7 +31,7 @@
         {% endfor %}
     </select><br><br>
     <button type="submit">Agregar</button>
-    <a href="{% url 'venta:venta_create' venta.id %}">Atrás</a><br>
+    <a href="{% url 'venta:venta_edit' venta.id %}">Atrás</a><br>
 
 <br><br>
 </form>
@@ -45,5 +45,4 @@
     }
 
 </script>
-
 </html>

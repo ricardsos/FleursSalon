@@ -8,17 +8,18 @@
 <body>
     <form action="" method="post">{% csrf_token %}
 
-        Cliente <input type="text" name="cliente" size="100" required></input><br><br>
-        Código <input type="text" name="codigo" required></input>
-        <br><br>
+        Cliente <input type="text" name="cliente" size="100" value="" required><br><br>
+        Código <input type="text" name="codigo" required><br><br>
+        TOTAL: $ {{ venta.total }} <br><br>
+        <a href="{% url 'venta:lineaServicio_create' venta.id %}">Agregar Servicio</a><br><br>
 
-        <a href="{% url 'venta:lineaServicio_create' id %}">Agregar Servicio</a><br><br>
-
-        <a href="{% url 'venta:lineaProducto_create' id %}">Agregar Producto</a><br><br>
+        <a href="{% url 'venta:lineaProducto_create' venta.id %}">Agregar Producto</a><br><br>
 
         <button type="submit">Finalizar</button>
-        <button>Cancelar</button>
+
+        <a href="{% url 'venta:venta_list_delete' venta.id %}">Cancelar</a><br>
     </form>
+
 {% if lineasServicio %}
 <h1>Servicios</h1>
 <table>
@@ -29,7 +30,7 @@
         <th>Descuento</th>
         <th>Precio final</th>
         <th>Descripcion</th>
-        <th colspan="3" >Acciones</th>
+        <th colspan="2" >Acciones</th>
     </tr>
     {% for ls in lineasServicio %}
     <tr>
@@ -39,9 +40,9 @@
         <td>{{ ls.descuento }}</td>
         <td>{{ ls.nuevoPrecio }}</td>
         <td>{{ ls.descripcion }}</td>
-        <td><a href="">Ver</a></td>
         <td><a href="">Editar</a></td>
-        <td><a href="">Eliminar</a></td>    </tr>
+        <td><a href="">Eliminar</a></td>
+    </tr>
     {% endfor %}
 </table>
 {% endif %}
@@ -56,7 +57,7 @@
         <th>Descuento</th>
         <th>Precio final</th>
         <th>Subtotal</th>
-        <th>Acciones</th>
+        <th colspan="2" >Acciones</th>
     </tr>
     {% for lp in lineasProducto %}
     <tr>
@@ -66,7 +67,8 @@
         <td>{{ lp.descuento }}</td>
         <td>{{ lp.nuevoPrecio }}</td>
         <td>{{ lp.subtotal }}</td>
-        <td></td>
+        <td><a href="">Editar</a></td>
+        <td><a href="">Eliminar</a></td>
     </tr>
     {% endfor %}
 </table>
