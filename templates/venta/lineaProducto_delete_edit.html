@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form action="" method="post">{% csrf_token %}
+        <h1>¿Desea eliminar el producto "{{ lineaProducto.producto.nombre }}" de la venta?</h1>
+        Producto: {{ lineaProducto.producto.nombre }}<br>
+        Cantidad: {{ lineaProducto.cantidad }}<br>
+        Precio: {{ lineaProducto.producto.precio }}<br>
+        Descuento: {{ lineaProducto.descuento }}<br>
+        Precio final: {{ lineaProducto.nuevoPrecio }}<br>
+        Subtotal: {{ lineaProducto.subtotal }}<br><br>
+        <button type="submit">Eliminar</button>
+    <a href="{% url 'venta:venta_edit' venta.id %}">Atrás</a><br>
+        <br><br>
+    </form>
+</body>
+</html>

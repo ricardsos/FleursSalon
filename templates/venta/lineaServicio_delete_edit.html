@@ -8,13 +8,13 @@
     <form action="" method="post">{% csrf_token %}
         <h1>¿Desea eliminar el servicio "{{ lineaServicio.servicio }}" de la venta?</h1>
         Servicio: {{ lineaServicio.servicio }}<br>
-        Colaborador: {{ lineaServicio.colaborador.first_name }} {{ lineaServicio.colaborador.last_name }}<br>
+        Colaborador: {{ lineaServicio.colaborador }}<br>
         Precio: {{ lineaServicio.precio }}<br>
         Descuento: {{ lineaServicio.descuento }}<br>
         Precio final: {{ lineaServicio.nuevoPrecio }}<br>
         Descripción: {{ lineaServicio.descripcion }}<br><br>
         <button type="submit">Eliminar</button>
-    <a href="{% url 'venta:venta_create' venta.id %}">Atrás</a><br>
+    <a href="{% url 'venta:venta_edit' venta.id %}">Atrás</a><br>
         <br><br>
     </form>
 </body>

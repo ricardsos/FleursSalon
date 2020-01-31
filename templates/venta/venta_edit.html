@@ -12,7 +12,7 @@ TOTAL: $ {{ venta.total }}<br><br>
 
         <a href="{% url 'venta:lineaServicio_create_edit' venta.id %}">Agregar Servicio</a><br><br>
 
-        <a href="">Agregar Producto</a><br><br>
+        <a href="{% url 'venta:lineaProducto_create_edit' venta.id %}">Agregar Producto</a><br><br>
 
 <a href="{% url 'venta:venta_list' %}">Atrás</a><br>
 
@@ -31,13 +31,13 @@ TOTAL: $ {{ venta.total }}<br><br>
     {% for ls in lineasServicio %}
     <tr>
         <td>{{ ls.servicio }}</td>
-        <td>{{ ls.colaborador }}</td>
+        <td>{{ ls.colaborador.first_name }} {{ ls.colaborador.last_name }}</td>
         <td>{{ ls.precio }}</td>
         <td>{{ ls.descuento }}</td>
         <td>{{ ls.nuevoPrecio }}</td>
         <td>{{ ls.descripcion }}</td>
-        <td><a href="">Editar</a></td>
-        <td><a href="{% url 'venta:lineaServicio_delete' ls.id %}">Eliminar</a></td>
+        <td><a href="{% url 'venta:lineaServicio_edit_edit' ls.id %}">Editar</a></td>
+        <td><a href="{% url 'venta:lineaServicio_delete_edit' ls.id %}">Eliminar</a></td>
     </tr>
     {% endfor %}
 </table>
@@ -64,8 +64,8 @@ TOTAL: $ {{ venta.total }}<br><br>
         <td>{{ lp.descuento }}</td>
         <td>{{ lp.nuevoPrecio }}</td>
         <td>{{ lp.subtotal }}</td>
-        <td><a href="">Editar</a></td>
-        <td><a href="">Eliminar</a></td>
+        <td><a href="{% url 'venta:lineaProducto_edit_edit' lp.id %}">Editar</a></td>
+        <td><a href="{% url 'venta:lineaProducto_delete_edit' lp.id %}">Eliminar</a></td>
     </tr>
     {% endfor %}
 </table>

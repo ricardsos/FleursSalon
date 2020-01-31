@@ -27,7 +27,7 @@
     Colaborador
     <select name="colaborador" id="colaborador"><!--{{ c.first_name }}-->
         {% for c in colaboradores %}
-        <option value="{{ c.last_name }}">{{ c.last_name }}</option>
+        <option value="{{ c.id }}">{{ c.first_name }} {{ c.last_name }}</option>
         {% endfor %}
     </select><br><br>
     <button type="submit">Agregar</button>
@@ -43,7 +43,6 @@
         var desc = document.getElementById('descuento');
         desc.disabled = !desc.disabled
     }
-
 </script>
 
 </html>

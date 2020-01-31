@@ -30,7 +30,7 @@ TOTAL: $ {{ venta.total }}
     {% for ls in lineasServicio %}
     <tr>
         <td>{{ ls.servicio }}</td>
-        <td>{{ ls.colaborador }}</td>
+        <td>{{ ls.colaborador.first_name }} {{ ls.colaborador.last_name }}</td>
         <td>{{ ls.precio }}</td>
         <td>{{ ls.descuento }}</td>
         <td>{{ ls.nuevoPrecio }}</td>

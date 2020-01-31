@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form action="" method="post">{% csrf_token %}
+        <h1>Editar producto "{{ lineaProducto.producto.nombre }}" </h1>
+        Producto
+        <select name="producto" id="producto">
+            <option value="{{ lineaProducto.producto.id }}">{{ lineaProducto.producto.nombre }}</option>
+            {% for p in productos %}
+                {% if p.nombre ==  lineaProducto.producto.nombre %}
+                {% else %}
+            <option value="{{ p.id }}">{{ p.nombre }}</option>
+                {% endif  %}
+            {% endfor %}
+        </select><br><br>
+        Precio $ <br><br>
+
+        Cantidad <input type="number" name="cantidad" id="cantidad" value="{{ lineaProducto.cantidad }}"><br><br>
+
+        <input type="checkbox" name="check" onClick="habilitar()">
+        Descuento (%)
+        <input type="text" name="descuento" id="descuento" value="{{ lineaProducto.descuento }}" disabled><br><br>
+
+        Precio final <input type="text" name="nuevoprecio" id="nuevoprecio" value="{{ lineaProducto.nuevoPrecio }}">
+        <br><br>
+
+        Subtotal <input type="text" name="subtotal" id="subtotal" value="{{ lineaProducto.subtotal }}"><br><br>
+        <button type="submit">Guardar</button>
+        <a href="{% url 'venta:venta_edit' venta.id %}">Atrás</a><br>
+    </form>
+
+</body>
+<script>
+    function habilitar(){
+        var desc = document.getElementById('descuento');
+        desc.disabled = !desc.disabled
+    }
+</script>
+</html>
