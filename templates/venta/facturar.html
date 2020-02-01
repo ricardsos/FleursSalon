@@ -1,0 +1,211 @@
+{% extends 'base/base.html'%}
+{% load static %}
+{% block title%} Venta {% endblock%}
+{%block mn%}
+
+
+<link href="{%static "css/style.css" %}" rel="stylesheet" type="text/css">
+<!-- INICIO DE FORMULARIO -->
+<form>  
+  <div class="form-group">
+    <label for="exampleInputEmail1">Cliente</label>
+    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nombre de cliente">
+    <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+  </div>
+
+
+<!-- ROW PARA MOSTRAR EN UNA SOLA LINEA -->
+<div class="row">
+
+  <!-- PRODUCTOS O SERVICIOS -->
+  <div class="col-12 col-md-8">
+    <div class="card mb-3 productos" style="max-width: 100%;">
+      <div class="card-header">
+        <i class="fas fa-chart-area"></i>
+        Productos</div>
+      <div class="card-body">
+        <!-- SELECT -->
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect01">Producto</label>
+          </div>
+          <select id="select-producto" class="custom-select" id="inputGroupSelect01">
+            <option selected>Seleccione el producto</option>
+            <option value="Shampoo">Shampoo</option>
+            <option value="Gel">Gel</option>
+            <option value="Tinte">Tinte</option>
+          </select>
+        </div>
+        <!-- FIN DE SELECT -->
+        <!-- SECCION PRECIOS Y DESCUENTOS -->
+        <!-- PRECIO -->
+        <div class="row">
+          <div class="col-4 ">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Precio</label>
+              <input type="email" class="form-control" id="recioproducto" aria-describedby="emailHelp" placeholder="$10">
+             <!--  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+            </div>
+          </div>
+          <!-- FIN PRECIO -->
+           <!-- CANTIDAD -->
+           <div class="col-2 ">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Cantidad</label>
+              <input type="email" class="form-control" id="cantidadproducto" aria-describedby="emailHelp" placeholder="1">
+             <!--  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+            </div>
+          </div>
+          <!-- FIN CANTIDAD -->
+          <!-- DESCUENTO -->
+          <div class="col-3">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Descuento</label>
+              <input type="email" class="form-control" id="descuentoproducto" aria-describedby="emailHelp" placeholder="10 = 10% ">
+              <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+            </div>
+          </div>
+          <!-- FIN DESCUENTO -->
+          <!-- PRECIO FINAL -->
+          <div class="col-3">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Nuevo Precio</label>
+              <input type="email" class="form-control" id="nuevoprecioproducto" aria-describedby="emailHelp" placeholder="$12" >
+              <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+            </div>
+          </div>
+          <!-- FIN PRECIO FINAL -->
+
+        </div>
+        <!-- FIN DE SECCION PRECIOS Y DESCUENTOS -->
+        <!-- BOTON DE AGREGAR -->
+        <button type="button" onclick="agregarproducto()" class="btn btn-success">Agregar</button>
+        <!-- FIN BOTON DE AGREGAR -->
+      </div>
+     
+    </div>
+    <div class="card mb-3 servicios" style="max-width: 100%;">
+      <div class="card-header">
+        <i class="fas fa-chart-area"></i>
+        Servicios</div>
+      <div class="card-body">
+        <!-- SELECT -->
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect01">Servicio</label>
+          </div>
+          <select class="custom-select" id="inputGroupSelect01">
+            <option selected>Seleccione el servicio</option>
+            <option value="1">Corte</option>
+            <option value="2">Lavado</option>
+            <option value="3">Tinte</option>
+          </select>
+        </div>
+        <!-- FIN DE SELECT -->
+        <!-- SECCION PRECIOS Y DESCUENTOS -->
+        <!-- PRECIO -->
+        <div class="row">
+          <!-- PRECIO -->
+          <div class="col-4 ">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Precio</label>
+              <input type="number" class="form-control" id="precioservicio" aria-describedby="emailHelp" placeholder="$10">
+             <!--  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+            </div>
+          </div>
+          <!-- FIN PRECIO -->
+           <!-- CANTIDAD -->
+           <div class="col-2 ">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Cantidad</label>
+              <input type="number" class="form-control" id="cantidadservicio" aria-describedby="emailHelp" placeholder="1">
+             <!--  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+            </div>
+          </div>
+          <!-- FIN CANTIDAD -->
+          <!-- DESCUENTO -->
+          <div class="col-3">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Descuento</label>
+              <input type="number" class="form-control" id="descuentoservicio" aria-describedby="emailHelp" placeholder="10 = 10% ">
+              <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+            </div>
+          </div>
+          <!-- FIN DESCUENTO -->
+          <!-- PRECIO FINAL -->
+          <div class="col-3">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Nuevo Precio</label>
+              <input type="email" class="form-control" id="nuevoprecioservicio" aria-describedby="emailHelp" placeholder="$12">
+              <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+            </div>
+          </div>
+          <!-- FIN PRECIO FINAL -->
+          
+
+        </div>
+        <!-- SELECT COLABORADOR -->
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect01">Colaborador</label>
+          </div>
+          <select class="custom-select" id="inputGroupSelect01">
+            <option selected>Seleccione el colaborador</option>
+            <option value="1">Ricky</option>
+            <option value="2">Victor</option>
+            <option value="3">Ariel</option>
+          </select>
+        </div>
+        <!-- FIN DE SELECT -->
+        <!-- NOTAS -->
+        <div class="form-group">
+          <label for="exampleInputEmail1">Notas</label>
+          <textarea type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Comentarios aqui"></textarea>
+         <!--  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+        </div>
+        <!-- FIN DE NOTAS -->
+        <!-- FIN DE SECCION PRECIOS Y DESCUENTOS -->
+        <!-- BOTON DE AGREGAR -->
+        <button type="button" class="btn btn-success">Agregar</button>
+        <!-- FIN BOTON DE AGREGAR -->
+      </div>
+     
+    </div>
+  </div>
+  <!-- FIN PRODUCTOS O SERVICIOS -->
+
+  <!-- FACTURA -->
+  <div class="col-12 col-md-4">
+    <div class="card mb-3" style="max-width: 100%;">
+      <div class="card-header">
+        <i class="fas fa-chart-area"></i>
+        En venta</div>
+      <div class="card-body text-left" id="factura">
+      <!-- <div class="row">
+        <div class="col-6">Shampo</div>
+        <div class="col-3">2</div>
+        <div class="col-3">$12.45</div>
+      </div> -->
+      </div>
+       
+      </div>
+      <div class="card-footer small text-center total-venta" id="valortotal">Agregue un producto o servicio</div>
+    </div>
+  </div>
+  <!-- FIN FACTURA -->
+</div>
+
+<!-- FIN ROW PARA MOSTRAR EN UNA SOLA LINEA -->
+</form>
+<!-- FIN DE FORMULARIO -->
+
+
+
+<!-- SCRIPT PARA CERRAR LA NAV BAR -->
+<script>
+  document.getElementById("sidebar-to-togle").classList.add('toggled');
+  document.getElementById("page-top").classList.add('sidebar-toggled')
+</script>
+<!-- JS DE FACTURAR -->
+<script src="{%static "js/facturar.js" %}"></script>
+{% endblock %}

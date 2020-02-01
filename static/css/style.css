@@ -1,0 +1,18 @@
+
+/* CARD DE LOS PRODUCTOS EN FACTURAR */
+.card{
+    
+    margin: 5px 5px 5px 5px;
+}
+
+/* BOTON DE FACTURAR */
+.total-venta{
+    background-color: #67bade;
+    font-family:Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    font-size: 24px;;
+    color: #ffffff;
+}
+.lineaproducto{
+    margin-top: 5px;
+}

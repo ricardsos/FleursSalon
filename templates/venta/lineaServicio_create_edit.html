@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Nuevo Servicio</h1>
+<form action="" method="post">{% csrf_token %}
+
+    Servicio
+    <select name="servicio" id="servicio">
+        {% for s in servicios %}
+        <option value="{{ s.nombre }}">{{ s.nombre }}</option>
+        {% endfor %}
+    </select><br><br>
+
+     Precio <input type="text" name="precio" id="precio">
+
+    <input type="checkbox" name="check" onClick="habilitar()"> Descuento (%)
+    <input type="text" name="descuento" id="descuento" disabled><br><br>
+
+    Nuevo precio <input type="text" name="nuevoprecio" id="nuevoprecio">
+    <br><br>
+    Descripción <input type="text" name="descripcion"><br><br>
+
+    Colaborador
+    <select name="colaborador" id="colaborador"><!--{{ c.first_name }}-->
+        {% for c in colaboradores %}
+        <option value="{{ c.last_name }}">{{ c.last_name }}</option>
+        {% endfor %}
+    </select><br><br>
+    <button type="submit">Agregar</button>
+    <a href="{% url 'venta:venta_edit' venta.id %}">Atrás</a><br>
+
+<br><br>
+</form>
+
+</body>
+
+<script>
+    function habilitar(){
+        var desc = document.getElementById('descuento');
+        desc.disabled = !desc.disabled
+    }
+
+</script>
+</html>
