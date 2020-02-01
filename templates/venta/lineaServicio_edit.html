@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form action="" method="post">{% csrf_token %}
+        <h1>Editar servicio "{{ lineaServicio.servicio }}" </h1>
+        Servicio
+        <select name="servicio" id="servicio">
+            <option value="{{ lineaServicio.servicio }}">{{ lineaServicio.servicio }}</option>
+            {% for s in servicios %}
+                {% if s == lineaServicio.servicio %}
+                {% else %}
+            <option value="{{ s.nombre }}">{{ s.nombre }}</option>
+                {% endif  %}
+            {% endfor %}
+        </select><br><br>
+         Precio <input type="text" name="precio" id="precio" value="{{ lineaServicio.precio }}"><br><br>
+
+        <input type="checkbox" name="check" onClick="habilitar()">
+        Descuento (%)
+        <input type="text" name="descuento" id="descuento" value="{{ lineaServicio.descuento }}" disabled><br><br>
+
+        Precio final <input type="text" name="nuevoprecio" id="nuevoprecio" value="{{ lineaServicio.nuevoPrecio }}">
+        <br><br>
+        Descripción <input type="text" name="descripcion" value="{{ lineaServicio.descripcion }}"><br><br>
+        Colaborador
+        <select name="colaborador" id="colaborador">
+            <option value="{{ lineaServicio.colaborador.last_name }}">{{ lineaServicio.colaborador.first_name }} {{ lineaServicio.colaborador.last_name }}</option>
+            {% for c in colaboradores %}
+                {% if c.last_name == lineaServicio.colaborador.last_name and c.first_name == lineaServicio.colaborador.first_name %}
+                {% else %}
+            <option value="{{ c.last_name }}">{{ c.first_name }} {{ c.last_name }}</option>
+                {% endif  %}
+            {% endfor %}
+        </select><br><br>
+
+        <button type="submit">Guardar</button>
+    <a href="{% url 'venta:venta_create' venta.id %}">Atrás</a><br>
+        <br><br>
+    </form>
+</body>
+<script>
+    function habilitar(){
+        var desc = document.getElementById('descuento');
+        desc.disabled = !desc.disabled
+    }
+</script>
+</html>

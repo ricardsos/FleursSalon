@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+Código: {{ venta.codigo }} <br>
+Fecha: {{ venta.fecha }}<br>
+Cliente: <input type="text" name="cliente" size="100" value="{{ venta.cliente }}" required><br>
+TOTAL: $ {{ venta.total }}<br><br>
+
+        <a href="{% url 'venta:lineaServicio_create_edit' venta.id %}">Agregar Servicio</a><br><br>
+
+        <a href="{% url 'venta:lineaProducto_create_edit' venta.id %}">Agregar Producto</a><br><br>
+
+<a href="{% url 'venta:venta_list' %}">Atrás</a><br>
+
+{% if lineasServicio %}
+    <h1>Servicios</h1>
+    <table>
+     <tr>
+        <th>Servicio</th>
+        <th>Colaborador</th>
+        <th>Precio</th>
+        <th>Descuento</th>
+        <th>Precio final</th>
+        <th>Descripcion</th>
+        <th colspan="2" >Acciones</th>
+    </tr>
+    {% for ls in lineasServicio %}
+    <tr>
+        <td>{{ ls.servicio }}</td>
+        <td>{{ ls.colaborador.first_name }} {{ ls.colaborador.last_name }}</td>
+        <td>{{ ls.precio }}</td>
+        <td>{{ ls.descuento }}</td>
+        <td>{{ ls.nuevoPrecio }}</td>
+        <td>{{ ls.descripcion }}</td>
+        <td><a href="{% url 'venta:lineaServicio_edit_edit' ls.id %}">Editar</a></td>
+        <td><a href="{% url 'venta:lineaServicio_delete_edit' ls.id %}">Eliminar</a></td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif  %}
+
+{% if lineasProducto %}
+    <h1>Productos</h1>
+    <table>
+     <tr>
+        <th>Producto</th>
+        <th>Cantidad</th>
+        <th>Precio</th>
+        <th>Descuento</th>
+        <th>Precio final</th>
+        <th>Subtotal</th>
+        <th colspan="2" >Acciones</th>
+
+    </tr>
+    {% for lp in lineasProducto %}
+    <tr>
+        <td>{{ lp.producto.nombre }}</td>
+        <td>{{ lp.cantidad }}</td>
+        <td>{{ lp.producto.precio }}</td>
+        <td>{{ lp.descuento }}</td>
+        <td>{{ lp.nuevoPrecio }}</td>
+        <td>{{ lp.subtotal }}</td>
+        <td><a href="{% url 'venta:lineaProducto_edit_edit' lp.id %}">Editar</a></td>
+        <td><a href="{% url 'venta:lineaProducto_delete_edit' lp.id %}">Eliminar</a></td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif  %}
+
+</body>
+</html>
