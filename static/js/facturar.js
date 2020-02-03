@@ -1,4 +1,5 @@
-
+lineasDeVentaProducto=[];
+lineasDeVentaServicio=[];
 function agregarproducto(){
     /* VARIABLE STATICA */
     
@@ -37,8 +38,78 @@ function agregarproducto(){
         pfinal.className="col-3";
         pfinal.innerHTML='$'+cantidadproducto*nuevoprecioproducto;
         document.getElementById(nombreproducto).appendChild(pfinal);
-        agregarproducto.valorstatico = parseInt( agregarproducto.valorstatico,10) + cantidadproducto*nuevoprecioproducto;
+        agregarproducto.valorstatico = agregarproducto.valorstatico + cantidadproducto*nuevoprecioproducto;
         console.log(agregarproducto.valorstatico);
+        var lineaprod = {
+            producto:nombreproducto,
+            cantidad:cantidadproducto,
+            descuento:"null",
+            nuevoprecio:nuevoprecioproducto,
+            subtotal:pfinal
+        };
+        lineasDeVentaProducto.push(lineaprod);
         document.getElementById('valortotal').innerHTML="$"+agregarproducto.valorstatico;
+        console.log(lineasDeVentaProducto);
     }
 }
+
+function agregarservicio(){
+    /* VARIABLE STATICA */
+    
+    /* Obtenemos el producto */
+    var nombreservicio = document.getElementById("select-servicio").value;
+    /* Si el producto no esta seleccionado no dejamos pasar */
+    if (nombreservicio=='Seleccione el servicio'){
+        alert('Seleccione un producto primero');
+    }
+    else{
+        /* Si se selecciono un producto obtenemos los demas datos */
+        var colaborador = document.getElementById('select-colaborador').value;
+        if(colaborador=='Seleccione el colaborador'){
+            alert('Seleccione un colaborador primero');
+        }else{
+        var nuevoprecioservicio = document.getElementById('nuevoprecioservicio').value;
+        var descripcion = document.getElementById('descripcion').value;
+        console.log(nombreservicio);
+        console.log(nuevoprecioservicio);
+        console.log(colaborador);
+        console.log(descripcion);
+        /* CREACION DE ELEMENTOS DOM */
+        /* Creacion de Row */
+        var row = document.createElement("div");
+        row.className="row lineaservicio";
+        row.id=nombreservicio;
+        document.getElementById("factura").appendChild(row);
+        /* Creacion de Cols */
+        /* Nombre producto */
+        var servicio = document.createElement("div");
+        servicio.className="col-6";
+        servicio.innerHTML=nombreservicio;
+        document.getElementById(nombreservicio).appendChild(servicio);
+        /* Cantidad */
+        var cantidad = document.createElement("div");
+        cantidad.className="col-3";
+        cantidad.innerHTML=1;
+        document.getElementById(nombreservicio).appendChild(cantidad);
+        /* precio final */
+        var sfinal = document.createElement("div");
+        sfinal.className="col-3";
+        sfinal.innerHTML='$'+1*nuevoprecioservicio;
+        document.getElementById(nombreservicio).appendChild(sfinal);
+        //agregarservicio.valorstatico = agregarproducto.valorstatico + 1*nuevoprecioservicio;
+        agregarproducto.valorstatico = agregarproducto.valorstatico + parseInt(nuevoprecioservicio,10);
+        console.log(agregarproducto.valorstatico);
+        var lineaservicio = {
+            servicio:nombreservicio,
+            colaboradorador:colaborador,
+            descuento:"null",
+            descripcion:descripcion,
+            subtotal:sfinal
+        };
+        lineasDeVentaServicio.push(lineaservicio);
+        document.getElementById('valortotal').innerHTML="$"+agregarproducto.valorstatico;
+        console.log(lineasDeVentaServicio);
+    }
+    }
+}
+agregarproducto.valorstatico=0;
