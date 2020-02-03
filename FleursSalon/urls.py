@@ -22,4 +22,5 @@ urlpatterns = [
     path('index/', views.index, name="index"),
     path('venta/', include('apps.venta.urls')),
     path('', include('apps.venta.urls')),
+    path('', include('apps.inventario.urls')),
 ]
