@@ -9,7 +9,7 @@
 <form>  
   <div class="form-group">
     <label for="exampleInputEmail1">Cliente</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nombre de cliente">
+    <input type="text" class="form-control" id="name-cliente" aria-describedby="emailHelp" placeholder="Nombre de cliente" required>
     <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
   </div>
 
@@ -97,8 +97,8 @@
           <select class="custom-select" id="select-servicio">
             <option selected>Seleccione el servicio</option>
             <option value="Corte">Corte</option>
-            <option value="Lavado">Lavado</option>
-            <option value="Tinte">Tinte</option>
+            <option value="Planchado">Planchado</option>
+            <option value="Alisado">Alisado</option>
           </select>
         </div>
         <!-- FIN DE SELECT -->
@@ -145,9 +145,9 @@
           </div>
           <select class="custom-select" id="select-colaborador">
             <option selected>Seleccione el colaborador</option>
-            <option value="Ricky">Ricky</option>
-            <option value="Victor">Victor</option>
-            <option value="Ariel">Ariel</option>
+            <option value="josericardo">Ricky</option>
+            <option value="victoredgardo">Victor</option>
+            <option value="christianariel">Ariel</option>
           </select>
         </div>
         <!-- FIN DE SELECT -->
@@ -181,9 +181,17 @@
         <div class="col-3">$12.45</div>
       </div> -->
       </div>
-       
+      <style>
+      .totaled{
+        color: #FFFFFF;
+    text-decoration: none;
+      }
+      </style>
+     
+      <div class="card-footer small text-center total-venta" onclick="finalizarlineas()" style="cursor: pointer;" id="valortotal">Agregue un producto o servicio</div>
+    
       </div>
-      <div class="card-footer small text-center total-venta" id="valortotal">Agregue un producto o servicio</div>
+     
     </div>
   </div>
   <!-- FIN FACTURA -->

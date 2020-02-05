@@ -7,9 +7,16 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
 import json
+from decimal import Decimal
 
 
 # Create your views here.
+
+def saludar(request,id,id2):
+	print(id)
+	print(id2)
+	return HttpResponse('')
+
 
 def facturar(request):
 	return render(request, 'venta/facturar.html')
@@ -18,6 +25,35 @@ def facturar(request):
 
 
 # Listar ventas GUARDADAS y se crea una Venta con datos por defecto
+def venta_create(request,cliente,codigo,total):
+	venta = Venta()
+	venta.cliente = cliente
+	venta.codigo = 0
+	venta.fecha = date.today()
+	venta.total = total
+	venta.anulado = True
+	venta.estado = 'N'
+	venta.save()
+	id = venta.id
+	print(id)
+	return HttpResponse(id)
+def linea_venta_servicio(request,id_venta,servicion,colaboradorn,precios,descripcion):
+	lineaServicio = LineaDeServicio()
+	venta = Venta.objects.get(id=id_venta)
+	lineaServicio.venta = venta
+	print(servicion)
+	servicio = Servicio.objects.get(nombre=servicion)
+	lineaServicio.servicio = servicio
+	colaborador = Colaborador.objects.get(username=colaboradorn)
+	lineaServicio.colaborador = colaborador
+	lineaServicio.precio = Decimal('0.0')
+	lineaServicio.descuento = 0  # request.POST.get('descuento')
+	lineaServicio.nuevoPrecio = Decimal(precios)
+	lineaServicio.descripcion = descripcion
+	lineaServicio.save()
+	return HttpResponse('')
+
+
 def venta_list(request):
 	#ventas = Venta.objects.all()
 	ventas = Venta.objects.filter(estado='G')

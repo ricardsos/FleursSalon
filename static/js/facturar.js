@@ -104,12 +104,100 @@ function agregarservicio(){
             colaboradorador:colaborador,
             descuento:"null",
             descripcion:descripcion,
-            subtotal:sfinal
+            subtotal:1*nuevoprecioservicio
         };
         lineasDeVentaServicio.push(lineaservicio);
         document.getElementById('valortotal').innerHTML="$"+agregarproducto.valorstatico;
         console.log(lineasDeVentaServicio);
+        
     }
     }
 }
 agregarproducto.valorstatico=0;
+
+function finalizarVenta(){
+    /* var lineasProducto = JSON.stringify(lineasDeVentaProducto)
+    var lineasServicio = JSON.stringify(lineasDeVentaServicio)
+    var parmetros = "lineasProducto=" + encodeURI(lineasProducto) + "lineasServicio=" + encodeURI(lineasServicio)
+ */
+}
+function finalizarlineas() {
+   var clientename=  document.getElementById('name-cliente').value;
+   console.log(clientename);
+   var valordiv =  document.getElementById('valortotal').value;
+   console.log(valordiv);
+    var xhttp;
+    //var preparedst = "saludar/"+lineasDeVentaServicio[0].servicio+"/"+lineasDeVentaServicio[0].colaboradorador;
+    var preparedst2 = "crearventa/"+clientename+"/0/"+agregarproducto.valorstatico;
+    if (window.XMLHttpRequest) {
+      // code for modern browsers
+      xhttp = new XMLHttpRequest();
+      } else {
+      // code for IE6, IE5
+      xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        this.responseText;
+       console.log("lol");
+        console.log(lineasDeVentaServicio.length);
+        /* Loop para general lineas de servicio */
+        if(lineasDeVentaServicio.length>0){
+        for (i = 0; i <lineasDeVentaServicio.length; i++) {
+            console.log("iteration");
+                var xhttp;
+                var preparedst = "linea_servicio/"+this.responseText+"/"+lineasDeVentaServicio[i].servicio+"/"+lineasDeVentaServicio[i].colaboradorador+"/"+lineasDeVentaServicio[i].subtotal+"/"+lineasDeVentaServicio[i].descripcion;
+                if (window.XMLHttpRequest) {
+                  // code for modern browsers
+                  xhttp = new XMLHttpRequest();
+                  } else {
+                  // code for IE6, IE5
+                  xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                xhttp.onreadystatechange = function() {
+                  if (this.readyState == 4 && this.status == 200) {
+                    
+                  }
+                };
+                xhttp.open("GET",preparedst , true);
+                xhttp.send(); 
+              
+          }  
+        }
+        else{
+            console.log("empty service");
+        }
+          /* fin loop lineas de servicio*/
+          if (lineasDeVentaProducto.length>0){
+          /* Loop para general lineas de producto */
+        for (i = 0; i <lineasDeVentaProducto.length; i++) {
+            console.log("iteration");
+                var xhttp;
+                var preparedst = "linea_servicio/"+this.responseText+"/"+lineasDeVentaServicio[i].servicio+"/"+lineasDeVentaServicio[i].colaboradorador+"/"+lineasDeVentaServicio[i].subtotal+"/"+lineasDeVentaServicio[i].descripcion;
+                if (window.XMLHttpRequest) {
+                  // code for modern browsers
+                  xhttp = new XMLHttpRequest();
+                  } else {
+                  // code for IE6, IE5
+                  xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                xhttp.onreadystatechange = function() {
+                  if (this.readyState == 4 && this.status == 200) {
+                    
+                  }
+                };
+                xhttp.open("GET",preparedst , true);
+                xhttp.send(); 
+              
+          }  
+        }
+        else{
+            console.log('empty products');
+        }
+          /* fin loop lineas de servicio*/
+      }
+    };
+    xhttp.open("GET", preparedst2, true);
+    xhttp.send();
+  
+}
