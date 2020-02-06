@@ -1,54 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-Código: {{ venta.codigo }} <br>
-Fecha: {{ venta.fecha }}<br>
-Cliente: {{ venta.cliente }} <br>
-TOTAL: $ {{ venta.total }}<br><br>
 
-<a href="{% url 'venta:venta_list' %}">Atrás</a><br>
+{% extends 'base/base.html'%}
+{% load static %}
+{% block title%} {{ venta.codigo }} {% endblock%}
+{%block mn%}
+<h5>Código: {{ venta.codigo }}</h5>
+<h5>Fecha: {{ venta.fecha }}</h5>
+<h5>Cliente: {{ venta.cliente }}</h5>
+
 
 {% if lineasServicio %}
-    <h1>Servicios</h1>
-    <table>
-     <tr>
-        <th>Servicio</th>
-        <th>Colaborador</th>
-        <th>Precio</th>
-        <th>Descuento</th>
-        <th>Precio final</th>
-        <th>Descripcion</th>
-
-    </tr>
-    {% for ls in lineasServicio %}
-    <tr>
-        <td>{{ ls.servicio }}</td>
-        <td>{{ ls.colaborador.first_name }} {{ ls.colaborador.last_name }}</td>
-        <td>{{ ls.precio }}</td>
-        <td>{{ ls.descuento }}</td>
-        <td>{{ ls.nuevoPrecio }}</td>
-        <td>{{ ls.descripcion }}</td>
-
-    </tr>
-    {% endfor %}
-</table>
+<h2>Servicios</h2>
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Servicio</th>
+        <th scope="col">Colaborador</th>
+        <th scope="col">Precio</th>
+        <th scope="col">Descuento</th>
+        <th scope="col">Precio final</th>
+        <th scope="col">Descripción</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for ls in lineasServicio %}
+        <tr>
+            <td>{{ ls.servicio }}</td>
+            <td>{{ ls.colaborador.first_name }} {{ ls.colaborador.last_name }}</td>
+            <td>{{ ls.precio }}</td>
+            <td>{{ ls.descuento }}</td>
+            <td>{{ ls.nuevoPrecio }}</td>
+            <td>{{ ls.descripcion }}</td>
+    
+        </tr>
+        {% endfor %}
+    </tbody>
+  </table>
 {% endif %}
 
 {% if lineasProducto %}
-    <h1>Productos</h1>
-    <table>
+<h2>Productos</h2>
+    <table class="table table-striped">
+    <thead>
      <tr>
-        <th>Producto</th>
-        <th>Cantidad</th>
-        <th>Precio</th>
-        <th>Descuento</th>
-        <th>Precio final</th>
-        <th>Subtotal</th>
+        <th scope="col">Producto</th>
+        <th scope="col">Cantidad</th>
+        <th scope="col">Precio</th>
+        <th scope="col">Descuento</th>
+        <th scope="col">Precio final</th>
+        <th scope="col">Subtotal</th>
     </tr>
+    </thead>
     {% for lp in lineasProducto %}
     <tr>
         <td>{{ lp.producto.nombre }}</td>
@@ -61,6 +62,10 @@ TOTAL: $ {{ venta.total }}<br><br>
     {% endfor %}
 </table>
 {% endif %}
+<br>
+<h4>TOTAL: $ {{ venta.total }}</h4><br><br>
+<button class="btn btn-outline-primary"><a  href="{% url 'venta:venta_list' %}">
+<i class="fas fa-arrow-alt-circle-left"></i> Atrás</a></button>
 
-</body>
-</html>
+
+{% endblock %}
