@@ -53,6 +53,19 @@ def linea_venta_servicio(request,id_venta,servicion,colaboradorn,precios,descrip
 	lineaServicio.save()
 	return HttpResponse('')
 
+def linea_venta_producto(request,id_venta,producton,cantidad,nuevoprecio,sbtotal):
+	lineaProducto = LineaDeProducto()
+	venta = Venta.objects.get(id=id_venta)
+	lineaProducto.venta = venta
+	producto = Producto.objects.get(nombre=producton)
+	lineaProducto.producto = producto
+	lineaProducto.cantidad = cantidad
+	lineaProducto.descuento = 0  # request.POST.get('descuento')
+	lineaProducto.nuevoPrecio = nuevoprecio
+	lineaProducto.subtotal = sbtotal
+	lineaProducto.save()
+	return HttpResponse('')
+
 
 def venta_list(request):
 	#ventas = Venta.objects.all()

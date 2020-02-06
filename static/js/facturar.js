@@ -45,7 +45,7 @@ function agregarproducto(){
             cantidad:cantidadproducto,
             descuento:"null",
             nuevoprecio:nuevoprecioproducto,
-            subtotal:pfinal
+            subtotal:nuevoprecioproducto
         };
         lineasDeVentaProducto.push(lineaprod);
         document.getElementById('valortotal').innerHTML="$"+agregarproducto.valorstatico;
@@ -173,7 +173,7 @@ function finalizarlineas() {
         for (i = 0; i <lineasDeVentaProducto.length; i++) {
             console.log("iteration");
                 var xhttp;
-                var preparedst = "linea_servicio/"+this.responseText+"/"+lineasDeVentaServicio[i].servicio+"/"+lineasDeVentaServicio[i].colaboradorador+"/"+lineasDeVentaServicio[i].subtotal+"/"+lineasDeVentaServicio[i].descripcion;
+                var preparedst = "linea_producto/"+this.responseText+"/"+lineasDeVentaProducto[i].producto+"/"+lineasDeVentaProducto[i].cantidad+"/"+lineasDeVentaProducto[i].nuevoprecio+"/"+lineasDeVentaProducto[i].subtotal;
                 if (window.XMLHttpRequest) {
                   // code for modern browsers
                   xhttp = new XMLHttpRequest();

@@ -3,7 +3,7 @@ from django.conf.urls import url, include
 from .views import venta_list, lineas_list, lineaServicio_create, lineaProducto_create, venta_delete, venta_edit, \
     venta_show, lineaServicio_delete_edit, facturar, venta_list_delete, lineaServicio_create_edit, \
     lineaProducto_create_edit, lineaServicio_edit_edit, lineaProducto_delete_edit, lineaProducto_edit_edit, \
-    lineaProducto_delete, lineaServicio_delete, lineaServicio_edit, lineaProducto_edit,saludar,venta_create,linea_venta_servicio
+    lineaProducto_delete, lineaServicio_delete, lineaServicio_edit, lineaProducto_edit,saludar,venta_create,linea_venta_servicio,linea_venta_producto
 
 app_name = 'venta'
 
@@ -12,6 +12,7 @@ urlpatterns = [
     path('saludar/<str:id>/<str:id2>/', saludar, name='saludar'),
     path('crearventa/<str:cliente>/<str:codigo>/<str:total>/', venta_create, name='venta_create'),
     path('linea_servicio/<str:id_venta>/<str:servicion>/<str:colaboradorn>/<str:precios>/<str:descripcion>/', linea_venta_servicio, name='linea_servicio'),
+    path('linea_producto/<str:id_venta>/<str:producton>/<str:cantidad>/<str:nuevoprecio>/<str:sbtotal>/', linea_venta_producto, name='linea_producto'),
     path('venta_list/', venta_list, name='venta_list'),
     path('venta_create/<int:id>/', lineas_list, name='venta_create'),
     path('venta_show/<int:id>/', venta_show, name='venta_show'),
