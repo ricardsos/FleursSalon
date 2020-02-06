@@ -1,21 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h1>Nuevo Servicio</h1>
-<form action="" method="post">{% csrf_token %}
+{% extends 'base/base.html'%}
+{% load static %}
+{% block title%} Venta {% endblock%}
+{%block mn%}
 
+
+<!--
+<form action="" method="post">{% csrf_token %}
+<!--
     Servicio
     <select name="servicio" id="servicio">
         {% for s in servicios %}
         <option value="{{ s.nombre }}">{{ s.nombre }}</option>
         {% endfor %}
     </select><br><br>
-
-     Precio <input type="text" name="precio" id="precio">
+-->
+    <!--
+     Precio <input type="text" name="precio" id="precio"><br><br>
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <div class="input-group-text">
+      <input type="checkbox" aria-label="Checkbox for following text input" onClick="habilitar()">
+    </div>
+  </div>
+  <input type="text" class="form-control" aria-label="Text input with checkbox" placeholder="Descuento (%)" name="descuento" id="descuento" disabled>
+</div>
 
     <input type="checkbox" name="check" onClick="habilitar()"> Descuento (%)
     <input type="text" name="descuento" id="descuento" disabled><br><br>
@@ -25,18 +33,88 @@
     Descripción <input type="text" name="descripcion"><br><br>
 
     Colaborador
-    <select name="colaborador" id="colaborador"><!--{{ c.first_name }}-->
+    <select name="colaborador" id="colaborador">{{ c.first_name }}
         {% for c in colaboradores %}
         <option value="{{ c.last_name }}">{{ c.last_name }}</option>
         {% endfor %}
     </select><br><br>
+
     <button type="submit">Agregar</button>
     <a href="{% url 'venta:venta_edit' venta.id %}">Atrás</a><br>
 
-<br><br>
 </form>
+-->
 
-</body>
+<ul class="list-group list-group-flush">
+    <li class="list-group-item">
+        <h5>Nuevo Servicio</h5>
+    </li>
+</ul>
+<br>
+<form action="" method="post">{% csrf_token %}
+    <div class="form-row">
+
+        <div class="col-md-4 mb-3">
+          <label for="servicio">Servicio</label>
+          <select class="custom-select" id="servicio" name="servicio" required>
+            <option selected disabled value="">Seleccionar</option>
+            {% for s in servicios %}
+            <option value="{{ s.nombre }}">{{ s.nombre }}</option>
+            {% endfor %}
+          </select>
+
+        </div>
+
+        <div class="col-md-4 mb-3">
+          <label for="colaborador">Colaborador</label>
+          <select class="custom-select" id="colaborador" name="colaborador" required>
+            <option selected disabled value="">Seleccionar</option>
+            {% for c in colaboradores %}
+            <option value="{{ c.last_name }}">{{ c.first_name }} {{ c.last_name }}</option>
+            {% endfor %}
+          </select>
+
+        </div>
+
+    </div>
+
+
+    <div class="form-row">
+        <div class="col-md-3 mb-3">
+          <label for="precio">Precio ($)</label>
+          <input type="text" class="form-control" id="precio" name="precio" onchange="hacerDescuento()" required>
+        </div>
+
+
+        <div class="mb-3 col-md-2">
+          <label for="descuento">Descuento (%)</label>
+          <div class="input-group-prepend">
+            <div class="input-group-text">
+              <input type="checkbox" aria-label="Checkbox for following text input" onClick="habilitar()" >
+            </div>
+              <input type="text" class="form-control" aria-label="Text input with checkbox" placeholder=""
+                      onchange="hacerDescuento()" name="descuento" id="descuento" disabled>
+          </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+          <label for="nuevoprecio">Nuevo Precio ($)</label>
+          <input type="text" class="form-control" id="nuevoprecio" name="nuevoprecio"  required>
+        </div>
+
+    </div>
+
+
+  <div class="form-row">
+      <div class="col-md-8 mb-3">
+        <label for="descripcion">Descripción</label>
+        <textarea class="form-control" id="descripcion" name="descripcion" rows="2" required></textarea>
+      </div>
+  </div>
+
+  <button class="btn btn-primary" type="submit">Agregar</button>
+    <a class="btn btn-outline-danger" href="{% url 'venta:venta_edit' venta.id %}" role="button">Atrás</a>
+</form>
 
 <script>
     function habilitar(){
@@ -44,5 +122,25 @@
         desc.disabled = !desc.disabled
     }
 
+    function hacerDescuento(){
+        var precio = document.getElementById('precio');
+        var desc = document.getElementById('descuento');
+        var nuevoPrecio = document.getElementById('nuevoprecio');
+
+        console.log(precio.value)
+        console.log(desc.value)
+        console.log(nuevoPrecio.value)
+
+
+        if(desc.value.length != 0 && precio.value.length != 0){
+            n = precio.value - precio.value * desc.value / 100;
+            nuevoPrecio.value = parseFloat(n).toFixed(2);
+
+        }
+
+        if(precio.value.length != 0){
+            precio.value = parseFloat(precio.value).toFixed(2);
+        }
+    }
 </script>
-</html>
+{% endblock %}

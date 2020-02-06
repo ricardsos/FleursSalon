@@ -1,75 +1,156 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-Código: {{ venta.codigo }} <br>
-Fecha: {{ venta.fecha }}<br>
-Cliente: <input type="text" name="cliente" size="100" value="{{ venta.cliente }}" required><br>
-TOTAL: $ {{ venta.total }}<br><br>
+{% extends 'base/base.html'%}
+{% load static %}
+{% block title%} Venta {% endblock%}
+{%block mn%}
 
-        <a href="{% url 'venta:lineaServicio_create_edit' venta.id %}">Agregar Servicio</a><br><br>
+<form action="" method="post">{% csrf_token %}
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+            Cliente
+            <input class="form-control form-control-sm col-md-5" type="text" placeholder="Editar nombre"
+                   name="cliente" value="{{ venta.cliente }}">
+            Código
+            <span class="badge badge-primary badge-pill">{{ venta.codigo }}</span>
+            Fecha
+            <span class="badge badge-primary badge-pill">{{ venta.fecha }}</span>
+            TOTAL
+            <span class="badge badge-primary badge-pill">$ {{ venta.total }}</span>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-8">
+                <button type="submit" class="btn btn-outline-primary" >Guardar</button>
+                <a class="btn btn-outline-danger" href="{% url 'venta:venta_list' %}" role="button">Atrás</a>
+            </div>
+            <div class="col-4 align-self-end">
+                <a class="btn btn-primary"  href="{% url 'venta:lineaServicio_create_edit' venta.id %}" role="button">Agregar Servicio</a>
 
-        <a href="{% url 'venta:lineaProducto_create_edit' venta.id %}">Agregar Producto</a><br><br>
+                <a class="btn btn-primary" href="{% url 'venta:lineaProducto_create_edit' venta.id %}" role="button">Agregar Producto</a>
+            </div>
+          </div>
+        </li>
+    </ul>
+</form>
+    {% if lineasServicio %}
+        <div class="card mb-3">
+          <div class="card-header">
+            <i class="fas fa-table"></i>
+            Servicios</div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover table-sm" id="dataTableServicio" width="100%" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th>Servicio</th>
+                    <th>Colaborador</th>
+                    <th>Precio</th>
+                    <th>Desc (%)</th>
+                    <th>Precio final</th>
+                    <th>Descripción</th>
+                    <th colspan="2">Acciones</th>
+                  </tr>
+                </thead>
+                <tfoot>
+                  <tr>
+                    <th>Servicio</th>
+                    <th>Colaborador</th>
+                    <th>Precio</th>
+                    <th>Desc (%)</th>
+                    <th>Precio final</th>
+                    <th>Descripción</th>
+                    <th colspan="2">Acciones</th>
+                  </tr>
+                </tfoot>
+                <tbody>
+                {% for ls in lineasServicio %}
+                  <tr>
+                    <td>{{ ls.servicio }}</td>
+                    <td>{{ ls.colaborador.first_name }} {{ ls.colaborador.last_name }}</td>
+                    <td>{{ ls.precio }}</td>
+                    <td>{{ ls.descuento }}</td>
+                    <td>{{ ls.nuevoPrecio }}</td>
+                    <td>{{ ls.descripcion }}</td>
+                    <td style="text-align: center;">
+                        <a href="{% url 'venta:lineaServicio_edit_edit' ls.id %}">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                    </td>
+                    <td style="text-align: center;">
+                        <a href="{% url 'venta:lineaServicio_delete_edit' ls.id %}">
+                            <i class="far fa-trash-alt"></i>
+                        </a>
+                    </td>
+                  </tr>
+                {% endfor %}
 
-<a href="{% url 'venta:venta_list' %}">Atrás</a><br>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card-footer small text-muted">Updated yesterday at 11:59 PM </div>
+        </div>
+    {% endif  %}
 
-{% if lineasServicio %}
-    <h1>Servicios</h1>
-    <table>
-     <tr>
-        <th>Servicio</th>
-        <th>Colaborador</th>
-        <th>Precio</th>
-        <th>Descuento</th>
-        <th>Precio final</th>
-        <th>Descripcion</th>
-        <th colspan="2" >Acciones</th>
-    </tr>
-    {% for ls in lineasServicio %}
-    <tr>
-        <td>{{ ls.servicio }}</td>
-        <td>{{ ls.colaborador.first_name }} {{ ls.colaborador.last_name }}</td>
-        <td>{{ ls.precio }}</td>
-        <td>{{ ls.descuento }}</td>
-        <td>{{ ls.nuevoPrecio }}</td>
-        <td>{{ ls.descripcion }}</td>
-        <td><a href="{% url 'venta:lineaServicio_edit_edit' ls.id %}">Editar</a></td>
-        <td><a href="{% url 'venta:lineaServicio_delete_edit' ls.id %}">Eliminar</a></td>
-    </tr>
-    {% endfor %}
-</table>
-{% endif  %}
+        {% if lineasProducto %}
+        <div class="card mb-3">
+          <div class="card-header">
+            <i class="fas fa-table"></i>
+            Productos</div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover table-sm" id="dataTableProducto" width="100%" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio Uni</th>
+                    <th>Subtotal</th>
+                    <th>Desc (%)</th>
+                    <th>Subtotal final</th>
 
-{% if lineasProducto %}
-    <h1>Productos</h1>
-    <table>
-     <tr>
-        <th>Producto</th>
-        <th>Cantidad</th>
-        <th>Precio</th>
-        <th>Descuento</th>
-        <th>Precio final</th>
-        <th>Subtotal</th>
-        <th colspan="2" >Acciones</th>
+                    <th colspan="2" >Acciones</th>
+                  </tr>
+                </thead>
+                <tfoot>
+                  <tr>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio Uni</th>
+                    <th>Subtotal</th>
+                    <th>Desc (%)</th>
+                    <th>Subtotal final</th>
 
-    </tr>
-    {% for lp in lineasProducto %}
-    <tr>
-        <td>{{ lp.producto.nombre }}</td>
-        <td>{{ lp.cantidad }}</td>
-        <td>{{ lp.producto.precio }}</td>
-        <td>{{ lp.descuento }}</td>
-        <td>{{ lp.nuevoPrecio }}</td>
-        <td>{{ lp.subtotal }}</td>
-        <td><a href="{% url 'venta:lineaProducto_edit_edit' lp.id %}">Editar</a></td>
-        <td><a href="{% url 'venta:lineaProducto_delete_edit' lp.id %}">Eliminar</a></td>
-    </tr>
-    {% endfor %}
-</table>
-{% endif  %}
+                    <th colspan="2" >Acciones</th>
+                  </tr>
+                </tfoot>
+                <tbody>
+                {% for lp in lineasProducto %}
+                    <tr>
+                        <td>{{ lp.producto.nombre }}</td>
+                        <td>{{ lp.cantidad }}</td>
+                        <td>{{ lp.producto.precio }}</td>
+                                                <td>{{ lp.subtotal }}</td>
+                        <td>{{ lp.descuento }}</td>
+                        <td>{{ lp.nuevoPrecio }}</td>
 
-</body>
-</html>
+                        <td style="text-align: center;">
+                            <a href="{% url 'venta:lineaProducto_edit_edit' lp.id %}">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                        </td>
+                        <td style="text-align: center;">
+                            <a href="{% url 'venta:lineaProducto_delete_edit' lp.id %}">
+                                <i class="far fa-trash-alt"></i>
+                            </a>
+                        </td>
+
+                    </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+        </div>
+        {% endif  %}
+{% endblock %}

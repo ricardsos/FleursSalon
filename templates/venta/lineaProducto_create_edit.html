@@ -1,23 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base/base.html'%}
+{% load static %}
+{% block title%} Venta {% endblock%}
+{%block mn%}
 
 
+<!--
 <h1>Nuevo Producto</h1>
 <form action="" method="post">{% csrf_token %}
 
     Productos
     <select name="producto" id="producto">
         {% for p in productos %}
-        <option value="{{ p.nombre }}">{{ p.nombre }}</option>
+        <option value="{{ p.nombre }}">{{ p.nombre }} Precio $ {{ p.precio }}</option>
+            Precio $ {{ p.precio }}
+
         {% endfor %}
     </select>
 
-    Precio $
     <br><br>
     Cantidad <input type="number" name="cantidad" id="cantidad"><br><br>
 
@@ -34,13 +33,103 @@
     <a href="{% url 'venta:venta_edit' venta.id %}">Atrás</a><br>
 
 </form>
+-->
 
-</body>
+<ul class="list-group list-group-flush">
+    <li class="list-group-item">
+        <h5>Nuevo Producto</h5>
+    </li>
+</ul>
+<br>
 
+<form action="" method="post">{% csrf_token %}
+    <div class="form-row">
+
+        <div class="col-md-4 mb-3">
+            <label for="producto">Producto</label>
+                <select class="custom-select" id="producto" name="producto" onchange="obtenerPrecio()" required>
+                    <option selected disabled value="">Seleccionar</option>
+                    {% for p in productos %}
+                    <option value="{{ p.id }}" id="{{ p.precio }}">{{ p.nombre }} </option>
+                    {% endfor %}
+                </select>
+        </div>
+
+        <div class="col-md-2 mb-3">
+            <label for="cantidad">Cantidad</label>
+                <input type="text" class="form-control" name="cantidad" id="cantidad" value="" onchange="obtenerPrecio()" required>
+        </div>
+
+              <div class="col-md-2 mb-3">
+          <label for="subtotal">Subtotal ($)</label>
+          <input type="text" class="form-control" id="subtotal" name="subtotal" value="" required>
+        </div>
+    </div>
+
+
+    <div class="form-row">
+        <div class="col-md-3 mb-3">
+          <label for="precio">Precio Unitario ($)</label>
+          <input type="text" class="form-control" id="precio" name="precio" value="" required disabled>
+        </div>
+
+
+        <div class="mb-3 col-md-2">
+          <label for="descuento">Descuento (%)</label>
+          <div class="input-group-prepend">
+            <div class="input-group-text">
+              <input type="checkbox" aria-label="Checkbox for following text input" onClick="habilitar()" >
+            </div>
+              <input type="text" class="form-control" aria-label="Text input with checkbox" placeholder=""
+                     onchange="hacerDescuento()" name="descuento" id="descuento" disabled required>
+          </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+          <label for="nuevoprecio">Nuevo Subtotal ($)</label>
+          <input type="text" class="form-control" id="nuevoprecio" name="nuevoprecio" value=""  required>
+        </div>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Agregar</button>
+    <a class="btn btn-outline-danger" href="{% url 'venta:venta_edit' venta.id %}" role="button">Atrás</a>
+</form>
 <script>
     function habilitar(){
         var desc = document.getElementById('descuento');
         desc.disabled = !desc.disabled
     }
+    //Obtener subtotal
+    function obtenerPrecio(){
+        var productos = document.getElementById('producto');
+        var precioProducto = productos.options[productos.selectedIndex].id;
+
+        var precio = document.getElementById('precio');
+        precio.value = precioProducto
+
+        var cantidad = document.getElementById('cantidad');
+        var subtotal = document.getElementById('subtotal');
+
+        if(cantidad.value.length != 0 && precio.value.length != 0){
+            subtotal.value = parseFloat(cantidad.value * precioProducto).toFixed(2);
+        }
+
+    }
+
+    function hacerDescuento(){
+        var desc = document.getElementById('descuento');
+        var nuevoPrecio = document.getElementById('nuevoprecio');
+        var subtotal = document.getElementById('subtotal');
+
+        console.log(desc.value)
+        console.log(nuevoPrecio.value)
+        console.log(subtotal.value)
+
+        if(desc.value.length != 0 && subtotal.value.length != 0){
+            nuevoPrecio.value = parseFloat(subtotal.value - subtotal.value * desc.value / 100).toFixed(2);
+
+        }
+    }
+
 </script>
-</html>
+{% endblock %}

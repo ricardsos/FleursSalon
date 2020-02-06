@@ -1,4 +1,4 @@
 
-function eleccionarFormulario(){
+function seleccionarFormulario(){
 
 }

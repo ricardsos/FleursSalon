@@ -19,7 +19,7 @@ def facturar(request):
 
 # Listar ventas GUARDADAS y se crea una Venta con datos por defecto
 def venta_list(request):
-	#ventas = Venta.objects.all()
+	# ventas = Venta.objects.all()
 	ventas = Venta.objects.filter(estado='G')
 	if request.method == 'POST':
 		venta = Venta()
@@ -49,17 +49,21 @@ def venta_show(request, id):
 	lineasProducto = LineaDeProducto.objects.filter(venta__id=id)
 	#print(venta.total)
 	return render(request, template_name='venta/venta_show.html', context={'venta': venta,
-																			 'lineasServicio': lineasServicio,
-																			 'lineasProducto': lineasProducto})
+																			'lineasServicio': lineasServicio,
+																			'lineasProducto': lineasProducto})
 
 
 def venta_edit(request, id):
 	venta = Venta.objects.get(id=id)
 	lineasServicio = LineaDeServicio.objects.filter(venta__id=id)
 	lineasProducto = LineaDeProducto.objects.filter(venta__id=id)
+	if request.method == 'POST':
+		venta.cliente = request.POST.get('cliente')
+		venta.save()
+		return redirect('venta:venta_list')
 	return render(request, template_name='venta/venta_edit.html', context={'venta': venta,
-																			 'lineasServicio': lineasServicio,
-																			 'lineasProducto': lineasProducto})
+																			'lineasServicio': lineasServicio,
+																			'lineasProducto': lineasProducto})
 
 
 def venta_delete(request, id):
@@ -71,8 +75,8 @@ def venta_delete(request, id):
 		venta.delete()
 		return redirect('venta:venta_list')
 	return render(request, template_name='venta/venta_delete.html', context={'venta': venta,
-																					'lineasServicio': lineasServicio,
-																					'lineasProducto': lineasProducto})
+																				'lineasServicio': lineasServicio,
+																				'lineasProducto': lineasProducto})
 
 
 def lineas_list(request, id):
@@ -137,8 +141,8 @@ def lineaServicio_edit(request, id):
 	totalServicio = 0
 	totalProducto = 0
 	if request.method == 'POST':
-		#venta = Venta.objects.get(id=id)
-		#lineaServicio.venta = venta
+		# venta = Venta.objects.get(id=id)
+		# lineaServicio.venta = venta
 
 		servicio = Servicio.objects.get(nombre=request.POST.get('servicio'))
 		lineaServicio.servicio = servicio
@@ -218,7 +222,7 @@ def lineaServicio_create_edit(request, id):
 		lineaServicio.colaborador = colaborador
 
 		lineaServicio.precio = request.POST.get('precio')
-		lineaServicio.descuento = 0  # request.POST.get('descuento')
+		lineaServicio.descuento = request.POST.get('descuento')
 		lineaServicio.nuevoPrecio = request.POST.get('nuevoprecio')
 		lineaServicio.descripcion = request.POST.get('descripcion')
 		lineaServicio.save()
@@ -305,7 +309,7 @@ def lineaServicio_delete_edit(request, id):
 
 		venta.total = totalServicio + totalProducto
 		venta.save()
-		return redirect('venta:venta_create', id=idventa)
+		return redirect('venta:venta_edit', id=idventa)
 	return render(request, template_name='venta/lineaServicio_delete_edit.html', context={'lineaServicio': lineaServicio,
 																					'venta': venta})
 
@@ -403,11 +407,11 @@ def lineaProducto_create_edit(request, id):
 		lineaProducto = LineaDeProducto()
 		lineaProducto.venta = venta
 
-		producto = Producto.objects.get(nombre=request.POST.get('producto'))
+		producto = Producto.objects.get(id=request.POST.get('producto'))
 		lineaProducto.producto = producto
 
 		lineaProducto.cantidad = request.POST.get('cantidad')
-		lineaProducto.descuento = 0  # request.POST.get('descuento')
+		lineaProducto.descuento = request.POST.get('descuento')
 		lineaProducto.nuevoPrecio = request.POST.get('nuevoprecio')
 		lineaProducto.subtotal = request.POST.get('subtotal')
 		lineaProducto.save()

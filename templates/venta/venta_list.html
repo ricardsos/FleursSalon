@@ -28,14 +28,35 @@
             <td>{{ v.cliente }}</td>
             <td>{{ v.total }}</td>
 
-            <td><a href="{% url 'venta:venta_show' v.id %}">Ver</a></td>
+            <td><a id="{{v.id}}" onclick="ver({{v.id}})" href="{% url 'venta:venta_show' v.id %}">Ver</a></td>
             <td><a href="{% url 'venta:venta_edit' v.id %}">Editar</a></td>
             <td><a href="{% url 'venta:venta_delete' v.id %}">Eliminar</a></td>
         </tr>
+
+<script>
+
+    function ver(id){
+    console.log(id)
+        var xhttp = new XMLHttpRequest();
+
+        xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            venta = JSON.parse(xhttp.responseText);
+            console.log(xhttp.responseText)
+        }
+    };
+    xhttp.open("POST", "/venta/venta_show/"+id+"/", true);
+    xhttp.send();
+    }
+</script>
     {% endfor %}
     </table>
     {% else %}
     <h1>¡Aún no se registran ventas!</h1>
     {% endif %}
 </body>
+<script>
+
+</script>
+
 </html>

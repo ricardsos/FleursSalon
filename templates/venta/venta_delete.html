@@ -1,12 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base/base.html'%}
+{% load static %}
+{% block title%} Venta {% endblock%}
+{%block mn%}
+
+<!--
 <form action="" method="post">{% csrf_token %}
-    <h1>¿Desea eliminar la venta del cliente "{{ venta.cliente }}"?</h1>
+    <h3>¿Desea eliminar la venta del cliente "{{ venta.cliente }}"?</h3>
     <button type="submit">Eliminar</button> <a href="{% url 'venta:venta_list' %}">Atrás</a><br>
     <br><br>
 </form>
@@ -63,7 +62,143 @@ TOTAL: $ {{ venta.total }}
     {% endfor %}
 </table>
 {% endif %}
+-->
+<form action="" method="post">{% csrf_token %}
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+            Cliente
+            <span class="badge badge-primary badge-pill">{{ venta.cliente }}</span>
+            Código
+            <span class="badge badge-primary badge-pill">{{ venta.codigo }}</span>
+            Fecha
+            <span class="badge badge-primary badge-pill">{{ venta.fecha }}</span>
+            TOTAL
+            <span class="badge badge-primary badge-pill">$ {{ venta.total }}</span>
+            <h5>¿Desea eliminar la venta del cliente "{{ venta.cliente }}"?</h5>
+        </li>
+        <li class="list-group-item">
+            <button type="submit" class="btn btn-danger" >Eliminar</button>
+            <a class="btn btn-outline-danger" href="{% url 'venta:venta_list' %}" role="button">Atrás</a>
+        </li>
+    </ul>
+</form>
+    {% if lineasServicio %}
+        <div class="card mb-3">
+          <div class="card-header">
+            <i class="fas fa-table"></i>
+            Servicios</div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover table-sm" id="dataTableServicio" width="100%" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th>Servicio</th>
+                    <th>Colaborador</th>
+                    <th>Precio</th>
+                    <th>Desc (%)</th>
+                    <th>Precio final</th>
+                    <th>Descripción</th>
+                    <th colspan="2">Acciones</th>
+                  </tr>
+                </thead>
+                <tfoot>
+                  <tr>
+                    <th>Servicio</th>
+                    <th>Colaborador</th>
+                    <th>Precio</th>
+                    <th>Desc (%)</th>
+                    <th>Precio final</th>
+                    <th>Descripción</th>
+                    <th colspan="2">Acciones</th>
+                  </tr>
+                </tfoot>
+                <tbody>
+                {% for ls in lineasServicio %}
+                  <tr>
+                    <td>{{ ls.servicio }}</td>
+                    <td>{{ ls.colaborador.first_name }} {{ ls.colaborador.last_name }}</td>
+                    <td>{{ ls.precio }}</td>
+                    <td>{{ ls.descuento }}</td>
+                    <td>{{ ls.nuevoPrecio }}</td>
+                    <td>{{ ls.descripcion }}</td>
+                    <td style="text-align: center;">
+                        <a href="{% url 'venta:lineaServicio_edit_edit' ls.id %}">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                    </td>
+                    <td style="text-align: center;">
+                        <a href="{% url 'venta:lineaServicio_delete_edit' ls.id %}">
+                            <i class="far fa-trash-alt"></i>
+                        </a>
+                    </td>
+                  </tr>
+                {% endfor %}
 
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+        </div>
+    {% endif  %}
 
-</body>
-</html>
+        {% if lineasProducto %}
+        <div class="card mb-3">
+          <div class="card-header">
+            <i class="fas fa-table"></i>
+            Productos</div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover table-sm" id="dataTableProducto" width="100%" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                    <th>Desc (%)</th>
+                    <th>Precio final</th>
+                    <th>Subtotal</th>
+                    <th colspan="2" >Acciones</th>
+                  </tr>
+                </thead>
+                <tfoot>
+                  <tr>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                    <th>Desc (%)</th>
+                    <th>Precio final</th>
+                    <th>Subtotal</th>
+                    <th colspan="2" >Acciones</th>
+                  </tr>
+                </tfoot>
+                <tbody>
+                {% for lp in lineasProducto %}
+                    <tr>
+                        <td>{{ lp.producto.nombre }}</td>
+                        <td>{{ lp.cantidad }}</td>
+                        <td>{{ lp.producto.precio }}</td>
+                        <td>{{ lp.descuento }}</td>
+                        <td>{{ lp.nuevoPrecio }}</td>
+                        <td>{{ lp.subtotal }}</td>
+                        <td style="text-align: center;">
+                            <a href="{% url 'venta:lineaProducto_edit_edit' lp.id %}">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                        </td>
+                        <td style="text-align: center;">
+                            <a href="{% url 'venta:lineaProducto_delete_edit' lp.id %}">
+                                <i class="far fa-trash-alt"></i>
+                            </a>
+                        </td>
+
+                    </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+        </div>
+        {% endif  %}
+{% endblock %}
