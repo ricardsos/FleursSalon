@@ -1,51 +1,89 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base/base.html'%}
+{% load static %}
+{% block title%} Venta {% endblock%}
+{%block mn%}
     <form action="" method="post">{% csrf_token %}
-        <h1>Editar servicio "{{ lineaServicio.servicio }}" </h1>
-        Servicio
-        <select name="servicio" id="servicio">
-            <option value="{{ lineaServicio.servicio }}">{{ lineaServicio.servicio }}</option>
-            {% for s in servicios %}
-                {% if s == lineaServicio.servicio %}
-                {% else %}
-            <option value="{{ s.nombre }}">{{ s.nombre }}</option>
-                {% endif  %}
-            {% endfor %}
-        </select><br><br>
-         Precio <input type="text" name="precio" id="precio" value="{{ lineaServicio.precio }}"><br><br>
+        <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+            <h5>Editar servicio "{{ lineaServicio.servicio }}"</h5>
+        </li>
+    </ul>
+<br>
+        <div class="form-row">
 
-        <input type="checkbox" name="check" onClick="habilitar()">
-        Descuento (%)
-        <input type="text" name="descuento" id="descuento" value="{{ lineaServicio.descuento }}" disabled><br><br>
-
-        Precio final <input type="text" name="nuevoprecio" id="nuevoprecio" value="{{ lineaServicio.nuevoPrecio }}">
-        <br><br>
-        Descripción <input type="text" name="descripcion" value="{{ lineaServicio.descripcion }}"><br><br>
-        Colaborador
-        <select name="colaborador" id="colaborador">
-            <option value="{{ lineaServicio.colaborador.last_name }}">{{ lineaServicio.colaborador.first_name }} {{ lineaServicio.colaborador.last_name }}</option>
+            <div class="col-md-4 mb-3">
+              <label for="servicio">Servicio</label>
+              <select class="custom-select" id="servicio" name="servicio" required>
+                <option value="{{ lineaServicio.servicio }}">{{ lineaServicio.servicio }}</option>
+                {% for s in servicios %}
+                    {% if s == lineaServicio.servicio %}
+                    {% else %}
+                <option value="{{ s.nombre }}">{{ s.nombre }}</option>
+                    {% endif  %}
+                {% endfor %}
+              </select>
+    
+            </div>
+    
+            <div class="col-md-4 mb-3">
+              <label for="colaborador">Colaborador</label>
+              <select class="custom-select" id="colaborador" name="colaborador" required>
+                <option value="{{ lineaServicio.colaborador.last_name }}">{{ lineaServicio.colaborador.first_name }} {{ lineaServicio.colaborador.last_name }}</option>
             {% for c in colaboradores %}
                 {% if c.last_name == lineaServicio.colaborador.last_name and c.first_name == lineaServicio.colaborador.first_name %}
                 {% else %}
             <option value="{{ c.last_name }}">{{ c.first_name }} {{ c.last_name }}</option>
                 {% endif  %}
             {% endfor %}
-        </select><br><br>
-
-        <button type="submit">Guardar</button>
-    <a href="{% url 'venta:venta_edit' venta.id %}">Atrás</a><br>
-        <br><br>
+              </select>
+    
+            </div>
+    
+        </div>
+    
+    
+        <div class="form-row">
+            <div class="col-md-3 mb-3">
+              <label for="precio">Precio ($)</label>
+              <input type="text" class="form-control" id="precio" name="precio" value="{{ lineaServicio.precio }}" required>
+            </div>
+    
+    
+            <div class="mb-3 col-md-2">
+              <label for="descuento">Descuento (%)</label>
+              <div class="input-group-prepend">
+                <div class="input-group-text">
+                  <input type="checkbox" aria-label="Checkbox for following text input" onClick="habilitar()" >
+                </div>
+                  <input type="text" class="form-control" aria-label="Text input with checkbox" placeholder=""
+                         name="descuento" id="descuento" value="{{ lineaServicio.descuento }}" disabled>
+              </div>
+            </div>
+    
+            <div class="col-md-3 mb-3">
+              <label for="nuevoprecio">Precio final ($)</label>
+              <input type="text" class="form-control" id="nuevoprecio" name="nuevoprecio" value="{{ lineaServicio.nuevoPrecio }}"  required>
+            </div>
+    
+        </div>
+    
+    
+      <div class="form-row">
+          <div class="col-md-8 mb-3">
+            <label for="descripcion">Descripción</label>
+            <input type="text" class="form-control" id="descripcion" name="descripcion" value="{{ lineaServicio.descripcion }}" rows="2" required></input>
+          </div>
+      </div>
+      <button class="btn btn-primary" type="submit">Guardar</button>
+      <a class="btn btn-outline-danger" href="{% url 'venta:venta_edit' venta.id %}" role="button">Atrás</a>
+      
     </form>
-</body>
+
 <script>
     function habilitar(){
         var desc = document.getElementById('descuento');
         desc.disabled = !desc.disabled
     }
 </script>
-</html>
+
+{% endblock %}

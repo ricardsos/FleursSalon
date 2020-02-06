@@ -1,21 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base/base.html'%}
+{% load static %}
+{% block title%} Venta {% endblock%}
+{% block mn %}
     <form action="" method="post">{% csrf_token %}
         <h1>¿Desea eliminar el servicio "{{ lineaServicio.servicio }}" de la venta?</h1>
-        Servicio: {{ lineaServicio.servicio }}<br>
-        Colaborador: {{ lineaServicio.colaborador }}<br>
-        Precio: {{ lineaServicio.precio }}<br>
-        Descuento: {{ lineaServicio.descuento }}<br>
-        Precio final: {{ lineaServicio.nuevoPrecio }}<br>
-        Descripción: {{ lineaServicio.descripcion }}<br><br>
-        <button type="submit">Eliminar</button>
-    <a href="{% url 'venta:venta_edit' venta.id %}">Atrás</a><br>
-        <br><br>
+        <h4>Servicio: {{ lineaServicio.servicio }}</h4>
+        <h4>Colaborador: {{ lineaServicio.colaborador }}</h4>
+        <h4>Precio: {{ lineaServicio.precio }}</h4>
+        <h4>Descuento: {{ lineaServicio.descuento }}</h4>
+        <h4>Precio final: {{ lineaServicio.nuevoPrecio }}</h4>
+        <h4>Descripción: {{ lineaServicio.descripcion }}</h4>
+
+        <li class="list-group-item">
+            <button type="submit" class="btn btn-danger" >Eliminar</button>
+            <a class="btn btn-outline-danger" href="{% url 'venta:venta_edit' venta.id %}" role="button">Atrás</a>
+        </li>
     </form>
-</body>
-</html>
+{% endblock %}

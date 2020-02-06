@@ -1,62 +1,71 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Ventas</title>
-</head>
-<body>
-    <h1>Ventas</h1>
+{% extends 'base/base.html'%}
+{% load static %}
+{% block title%} Ventas {% endblock%}
+{%block mn%}
+<link href="{%static "css/style.css" %}" rel="stylesheet" type="text/css">
+    <h1 style="text-align: center;">Ventas</h1>
     <form action="" method="post">{% csrf_token %}
-        <button>Nueva venta</button>
+        <button class="btn btn-primary">Nueva venta</button>
         <br><br>
     </form>
     {% if ventas %}
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Código</th>
-            <th>Fecha</th>
-            <th>Cliente</th>
-            <th>Total</th>
-            <th colspan="3" >Acciones</th>
-        </tr>
-    {% for v in ventas %}
-        <tr>
-            <td>{{ v.id }}</td>
-            <td>{{ v.codigo }}</td>
-            <td>{{ v.fecha }}</td>
-            <td>{{ v.cliente }}</td>
-            <td>{{ v.total }}</td>
+        <!-- DataTables Example -->
+        <div class="card mb-3">
+          <div class="card-header">
+            <i class="fas fa-table"></i>
+            Ventas</div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Código</th>
+                    <th>Fecha</th>
+                    <th>Cliente</th>
+                    <th>Total</th>
+                    <th colspan="3">Acciones</th>
+                  </tr>
+                </thead>
+                <tfoot>
+                  <tr>
+                    <th>ID</th>
+                    <th>Código</th>
+                    <th>Fecha</th>
+                    <th>Cliente</th>
+                    <th>Total</th>
+                    <th colspan="3">Acciones</th>
+                  </tr>
+                </tfoot>
+                <tbody>
+                {% for v in ventas %}
+                        <tr>
+                            <td>{{ v.id }}</td>
+                            <td>{{ v.codigo }}</td>
+                            <td>{{ v.fecha }}</td>
+                            <td>{{ v.cliente }}</td>
+                            <td>{{ v.total }}</td>
 
-            <td><a id="{{v.id}}" onclick="ver({{v.id}})" href="{% url 'venta:venta_show' v.id %}">Ver</a></td>
-            <td><a href="{% url 'venta:venta_edit' v.id %}">Editar</a></td>
-            <td><a href="{% url 'venta:venta_delete' v.id %}">Eliminar</a></td>
-        </tr>
-
-<script>
-
-    function ver(id){
-    console.log(id)
-        var xhttp = new XMLHttpRequest();
-
-        xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            venta = JSON.parse(xhttp.responseText);
-            console.log(xhttp.responseText)
-        }
-    };
-    xhttp.open("POST", "/venta/venta_show/"+id+"/", true);
-    xhttp.send();
-    }
-</script>
-    {% endfor %}
-    </table>
-    {% else %}
-    <h1>¡Aún no se registran ventas!</h1>
+                            <td style="text-align: center;"><button class="btn btn-light"><a href="{% url 'venta:venta_show' v.id %}">
+                                <i class="fas fa-eye"></i></a></button></td>
+                            <td style="text-align: center;"><button class="btn btn-light"><a href="{% url 'venta:venta_edit' v.id %}"></i>
+                                <i class="fas fa-edit"></i></a></button></td>
+                            <td style="text-align: center;"><button class="btn btn-light"><a href="{% url 'venta:venta_delete' v.id %}">
+                                <i class="far fa-trash-alt"></i></a></button></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card-footer small text-muted"></div>
+        </div>
+        {% else %}
+        <div class="alert alert-dark" role="alert">
+            ¡Aún no se registran ventas!
+        </div>
+       
     {% endif %}
-</body>
-<script>
-
-</script>
-
-</html>
+{% endblock %}
+<button class="btn btn-primary"><a href="{% url 'venta:venta_show' v.id %}">Ver</a></button>
+<a href="{% url 'venta:venta_show' v.id %}">Ver</a>

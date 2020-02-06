@@ -29,11 +29,11 @@
           <div class="input-group-prepend">
             <label class="input-group-text" for="inputGroupSelect01">Producto</label>
           </div>
-          <select class="custom-select" id="inputGroupSelect01">
+          <select id="select-producto" class="custom-select" id="inputGroupSelect01">
             <option selected>Seleccione el producto</option>
-            <option value="1">Shampoo</option>
-            <option value="2">Gel</option>
-            <option value="3">Tinte</option>
+            <option value="Shampoo">Shampoo</option>
+            <option value="Gel">Gel</option>
+            <option value="Tinte">Tinte</option>
           </select>
         </div>
         <!-- FIN DE SELECT -->
@@ -43,7 +43,7 @@
           <div class="col-4 ">
             <div class="form-group">
               <label for="exampleInputEmail1">Precio</label>
-              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="$10">
+              <input type="email" class="form-control" id="recioproducto" aria-describedby="emailHelp" placeholder="$10">
              <!--  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
             </div>
           </div>
@@ -52,7 +52,7 @@
            <div class="col-2 ">
             <div class="form-group">
               <label for="exampleInputEmail1">Cantidad</label>
-              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="1">
+              <input type="email" class="form-control" id="cantidadproducto" aria-describedby="emailHelp" placeholder="1">
              <!--  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
             </div>
           </div>
@@ -61,7 +61,7 @@
           <div class="col-3">
             <div class="form-group">
               <label for="exampleInputEmail1">Descuento</label>
-              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="10 = 10% ">
+              <input type="email" class="form-control" id="descuentoproducto" aria-describedby="emailHelp" placeholder="10 = 10% ">
               <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
             </div>
           </div>
@@ -70,7 +70,7 @@
           <div class="col-3">
             <div class="form-group">
               <label for="exampleInputEmail1">Nuevo Precio</label>
-              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="$12" disabled>
+              <input type="email" class="form-control" id="nuevoprecioproducto" aria-describedby="emailHelp" placeholder="$12" >
               <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
             </div>
           </div>
@@ -79,7 +79,7 @@
         </div>
         <!-- FIN DE SECCION PRECIOS Y DESCUENTOS -->
         <!-- BOTON DE AGREGAR -->
-        <button type="button" class="btn btn-success">Agregar</button>
+        <button type="button" onclick="agregarproducto()" class="btn btn-success">Agregar</button>
         <!-- FIN BOTON DE AGREGAR -->
       </div>
      
@@ -94,11 +94,11 @@
           <div class="input-group-prepend">
             <label class="input-group-text" for="inputGroupSelect01">Servicio</label>
           </div>
-          <select class="custom-select" id="inputGroupSelect01">
+          <select class="custom-select" id="select-servicio">
             <option selected>Seleccione el servicio</option>
-            <option value="1">Corte</option>
-            <option value="2">Lavado</option>
-            <option value="3">Tinte</option>
+            <option value="Corte">Corte</option>
+            <option value="Lavado">Lavado</option>
+            <option value="Tinte">Tinte</option>
           </select>
         </div>
         <!-- FIN DE SELECT -->
@@ -109,25 +109,19 @@
           <div class="col-4 ">
             <div class="form-group">
               <label for="exampleInputEmail1">Precio</label>
-              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="$10">
+              <input type="number" class="form-control" id="precioservicio" aria-describedby="emailHelp" placeholder="$10">
              <!--  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
             </div>
           </div>
           <!-- FIN PRECIO -->
            <!-- CANTIDAD -->
-           <div class="col-2 ">
-            <div class="form-group">
-              <label for="exampleInputEmail1">Cantidad</label>
-              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="1">
-             <!--  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
-            </div>
-          </div>
+           
           <!-- FIN CANTIDAD -->
           <!-- DESCUENTO -->
           <div class="col-3">
             <div class="form-group">
               <label for="exampleInputEmail1">Descuento</label>
-              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="10 = 10% ">
+              <input type="number" class="form-control" id="descuentoservicio" aria-describedby="emailHelp" placeholder="10 = 10% ">
               <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
             </div>
           </div>
@@ -136,7 +130,7 @@
           <div class="col-3">
             <div class="form-group">
               <label for="exampleInputEmail1">Nuevo Precio</label>
-              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="$12" disabled>
+              <input type="email" class="form-control" id="nuevoprecioservicio" aria-describedby="emailHelp" placeholder="$12">
               <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
             </div>
           </div>
@@ -149,24 +143,24 @@
           <div class="input-group-prepend">
             <label class="input-group-text" for="inputGroupSelect01">Colaborador</label>
           </div>
-          <select class="custom-select" id="inputGroupSelect01">
+          <select class="custom-select" id="select-colaborador">
             <option selected>Seleccione el colaborador</option>
-            <option value="1">Ricky</option>
-            <option value="2">Victor</option>
-            <option value="3">Ariel</option>
+            <option value="Ricky">Ricky</option>
+            <option value="Victor">Victor</option>
+            <option value="Ariel">Ariel</option>
           </select>
         </div>
         <!-- FIN DE SELECT -->
         <!-- NOTAS -->
         <div class="form-group">
           <label for="exampleInputEmail1">Notas</label>
-          <textarea type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Comentarios aqui"></textarea>
+          <textarea type="text" class="form-control" id="descripcion" aria-describedby="emailHelp" placeholder="Comentarios aqui"></textarea>
          <!--  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
         </div>
         <!-- FIN DE NOTAS -->
         <!-- FIN DE SECCION PRECIOS Y DESCUENTOS -->
         <!-- BOTON DE AGREGAR -->
-        <button type="button" class="btn btn-success">Agregar</button>
+        <button type="button" onclick="agregarservicio()" class="btn btn-success">Agregar</button>
         <!-- FIN BOTON DE AGREGAR -->
       </div>
      
@@ -180,10 +174,16 @@
       <div class="card-header">
         <i class="fas fa-chart-area"></i>
         En venta</div>
-      <div class="card-body">
+      <div class="card-body text-left" id="factura">
+      <!-- <div class="row">
+        <div class="col-6">Shampo</div>
+        <div class="col-3">2</div>
+        <div class="col-3">$12.45</div>
+      </div> -->
+      </div>
        
       </div>
-      <div class="card-footer small text-center total-venta">$45.65</div>
+      <div class="card-footer small text-center total-venta" id="valortotal">Agregue un producto o servicio</div>
     </div>
   </div>
   <!-- FIN FACTURA -->
@@ -200,4 +200,6 @@
   document.getElementById("sidebar-to-togle").classList.add('toggled');
   document.getElementById("page-top").classList.add('sidebar-toggled')
 </script>
+<!-- JS DE FACTURAR -->
+<script src="{%static "js/facturar.js" %}"></script>
 {% endblock %}

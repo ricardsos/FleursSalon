@@ -1,43 +1,79 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base/base.html'%}
+{% load static %}
+{% block title%} Venta {% endblock%}
+{%block mn%}
     <form action="" method="post">{% csrf_token %}
-        <h1>Editar producto "{{ lineaProducto.producto.nombre }}" </h1>
-        Producto
-        <select name="producto" id="producto">
-            <option value="{{ lineaProducto.producto.id }}">{{ lineaProducto.producto.nombre }}</option>
-            {% for p in productos %}
-                {% if p.nombre ==  lineaProducto.producto.nombre %}
-                {% else %}
-            <option value="{{ p.id }}">{{ p.nombre }}</option>
-                {% endif  %}
-            {% endfor %}
-        </select><br><br>
-        Precio $ <br><br>
+     <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+            <h5>Editar producto "{{ lineaProducto.producto.nombre }}"</h5>
+        </li>
+    </ul>
+<br>
+            <div class="form-row">
 
-        Cantidad <input type="number" name="cantidad" id="cantidad" value="{{ lineaProducto.cantidad }}"><br><br>
+            <div class="col-md-4 mb-3">
+              <label for="servicio">Producto</label>
+              <select class="custom-select" name="producto" id="producto" required>
+                <option value="{{ lineaProducto.producto.id }}">{{ lineaProducto.producto.nombre }}</option>
+                {% for p in productos %}
+                    {% if p.nombre ==  lineaProducto.producto.nombre %}
+                    {% else %}
+                <option value="{{ p.id }}">{{ p.nombre }}</option>
+                    {% endif  %}
+                {% endfor %}
+              </select>
 
-        <input type="checkbox" name="check" onClick="habilitar()">
-        Descuento (%)
-        <input type="text" name="descuento" id="descuento" value="{{ lineaProducto.descuento }}" disabled><br><br>
-
-        Precio final <input type="text" name="nuevoprecio" id="nuevoprecio" value="{{ lineaProducto.nuevoPrecio }}">
-        <br><br>
-
-        Subtotal <input type="text" name="subtotal" id="subtotal" value="{{ lineaProducto.subtotal }}"><br><br>
-        <button type="submit">Guardar</button>
-        <a href="{% url 'venta:venta_edit' venta.id %}">Atrás</a><br>
+    
+            </div>
+            
+            <div class="col-md-3 mb-3">
+                <label for="precio">Cantidad</label>
+                <input type="text" class="form-control" name="cantidad" id="cantidad" value="{{ lineaProducto.cantidad }}" required>
+              </div>
+    
+        </div>
+    
+    
+        <div class="form-row">
+            <div class="col-md-3 mb-3">
+              <label for="precio">Precio ($)</label>
+              <input type="text" class="form-control" id="precio" name="precio" value="{{ lineaProducto.precio }}" required>
+            </div>
+    
+    
+            <div class="mb-3 col-md-2">
+              <label for="descuento">Descuento (%)</label>
+              <div class="input-group-prepend">
+                <div class="input-group-text">
+                  <input type="checkbox" aria-label="Checkbox for following text input" onClick="habilitar()" >
+                </div>
+                  <input type="text" class="form-control" aria-label="Text input with checkbox" placeholder=""
+                         name="descuento" id="descuento" value="{{ lineaServicio.descuento }}" disabled>
+              </div>
+            </div>
+    
+            <div class="col-md-3 mb-3">
+              <label for="nuevoprecio">Precio final ($)</label>
+              <input type="text" class="form-control" id="nuevoprecio" name="nuevoprecio" value="{{ lineaProducto.nuevoPrecio }}"  required>
+            </div>
+    
+        </div>
+    
+    
+      <div class="form-row">
+        <div class="col-md-3 mb-3">
+            <label for="nuevoprecio">Subtotal ($)</label>
+            <input type="text" class="form-control" name="subtotal" id="subtotal" value="{{ lineaProducto.subtotal }}"  required>
+          </div>
+      </div>
+      <button class="btn btn-primary" type="submit">Guardar</button>
+      <a class="btn btn-outline-danger" href="{% url 'venta:venta_edit' venta.id %}" role="button">Atrás</a>
+      
     </form>
-
-</body>
 <script>
     function habilitar(){
         var desc = document.getElementById('descuento');
         desc.disabled = !desc.disabled
     }
 </script>
-</html>
+{% endblock %}
