@@ -19,7 +19,10 @@ def saludar(request,id,id2):
 
 
 def facturar(request):
-	return render(request, 'venta/facturar.html')
+	products =  Producto.objects.all()
+	services = Servicio.objects.all()
+	colabo = Colaborador.objects.all()
+	return render(request, 'venta/facturar.html', context={'products': products,'services':services,'colabo':colabo})
 
 # VENTAS
 

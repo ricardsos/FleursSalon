@@ -30,10 +30,13 @@
             <label class="input-group-text" for="inputGroupSelect01">Producto</label>
           </div>
           <select id="select-producto" class="custom-select" >
-            <option selected>Seleccione el producto</option>
+           <!--  <option selected>Seleccione el producto</option>
             <option value="Gotas reparadoras">Gotas reparadoras</option>
             <option value="Tinte">Tinte</option>
-            <option value="Champú">Champú</option>
+            <option value="Champú">Champú</option> -->
+            {%  for produ in products%}
+            <option value="{{produ.nombre}}">{{produ.nombre}}</option>
+            {% endfor%}
           </select>
         </div>
         <!-- FIN DE SELECT -->
@@ -95,10 +98,14 @@
             <label class="input-group-text" for="inputGroupSelect01">Servicio</label>
           </div>
           <select class="custom-select" id="select-servicio">
-            <option selected>Seleccione el servicio</option>
+           <!--  <option selected>Seleccione el servicio</option>
             <option value="Corte">Corte</option>
             <option value="Planchado">Planchado</option>
-            <option value="Alisado">Alisado</option>
+            <option value="Alisado">Alisado</option> -->
+            {% for serv in services%}
+            <option value="{{serv.nombre}}">{{serv.nombre}}</option>
+            {% endfor%}
+           
           </select>
         </div>
         <!-- FIN DE SELECT -->
@@ -144,10 +151,14 @@
             <label class="input-group-text" for="inputGroupSelect01">Colaborador</label>
           </div>
           <select class="custom-select" id="select-colaborador">
-            <option selected>Seleccione el colaborador</option>
+            <!-- <option selected>Seleccione el colaborador</option>
             <option value="josericardo">Ricky</option>
             <option value="victoredgardo">Victor</option>
-            <option value="christianariel">Ariel</option>
+            <option value="christianariel">Ariel</option> -->
+
+            {% for cola in colabo%}
+            <option value="{{cola.username}}">{{cola.first_name}} {{cola.last_name}}</option>
+            {% endfor%}
           </select>
         </div>
         <!-- FIN DE SELECT -->
