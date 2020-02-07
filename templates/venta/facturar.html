@@ -9,7 +9,7 @@
 <form>  
   <div class="form-group">
     <label for="exampleInputEmail1">Cliente</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nombre de cliente">
+    <input type="text" class="form-control" id="name-cliente" aria-describedby="emailHelp" placeholder="Nombre de cliente" required>
     <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
   </div>
 
@@ -29,11 +29,14 @@
           <div class="input-group-prepend">
             <label class="input-group-text" for="inputGroupSelect01">Producto</label>
           </div>
-          <select id="select-producto" class="custom-select" id="inputGroupSelect01">
-            <option selected>Seleccione el producto</option>
-            <option value="Shampoo">Shampoo</option>
-            <option value="Gel">Gel</option>
+          <select id="select-producto" class="custom-select" >
+           <!--  <option selected>Seleccione el producto</option>
+            <option value="Gotas reparadoras">Gotas reparadoras</option>
             <option value="Tinte">Tinte</option>
+            <option value="Champú">Champú</option> -->
+            {%  for produ in products%}
+            <option value="{{produ.nombre}}">{{produ.nombre}}</option>
+            {% endfor%}
           </select>
         </div>
         <!-- FIN DE SELECT -->
@@ -95,10 +98,14 @@
             <label class="input-group-text" for="inputGroupSelect01">Servicio</label>
           </div>
           <select class="custom-select" id="select-servicio">
-            <option selected>Seleccione el servicio</option>
+           <!--  <option selected>Seleccione el servicio</option>
             <option value="Corte">Corte</option>
-            <option value="Lavado">Lavado</option>
-            <option value="Tinte">Tinte</option>
+            <option value="Planchado">Planchado</option>
+            <option value="Alisado">Alisado</option> -->
+            {% for serv in services%}
+            <option value="{{serv.nombre}}">{{serv.nombre}}</option>
+            {% endfor%}
+           
           </select>
         </div>
         <!-- FIN DE SELECT -->
@@ -144,10 +151,14 @@
             <label class="input-group-text" for="inputGroupSelect01">Colaborador</label>
           </div>
           <select class="custom-select" id="select-colaborador">
-            <option selected>Seleccione el colaborador</option>
-            <option value="Ricky">Ricky</option>
-            <option value="Victor">Victor</option>
-            <option value="Ariel">Ariel</option>
+            <!-- <option selected>Seleccione el colaborador</option>
+            <option value="josericardo">Ricky</option>
+            <option value="victoredgardo">Victor</option>
+            <option value="christianariel">Ariel</option> -->
+
+            {% for cola in colabo%}
+            <option value="{{cola.username}}">{{cola.first_name}} {{cola.last_name}}</option>
+            {% endfor%}
           </select>
         </div>
         <!-- FIN DE SELECT -->
@@ -181,9 +192,17 @@
         <div class="col-3">$12.45</div>
       </div> -->
       </div>
-       
+      <style>
+      .totaled{
+        color: #FFFFFF;
+    text-decoration: none;
+      }
+      </style>
+     
+      <div class="card-footer small text-center total-venta" onclick="finalizarlineas()" style="cursor: pointer;" id="valortotal">Agregue un producto o servicio</div>
+    
       </div>
-      <div class="card-footer small text-center total-venta" id="valortotal">Agregue un producto o servicio</div>
+     
     </div>
   </div>
   <!-- FIN FACTURA -->
