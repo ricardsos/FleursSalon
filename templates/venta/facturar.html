@@ -4,7 +4,17 @@
 {%block mn%}
 
 
-<link href="{%static "css/style.css" %}" rel="stylesheet" type="text/css">
+<link href="{%static 'css/style.css' %}" rel="stylesheet" type="text/css">
+<div class="container witness-div">
+                <div  class="row">
+                    <div class="col"></div>
+                    <div class="col"></div>
+                    <div class="col"></div>
+                    <div class="col text-right">
+                    <a class="btn btn btn-outline-danger" href="{% url 'venta:venta_list' %}"  role="button">Go Back</a>
+                    </div>
+                </div>
+            </div>
 <!-- INICIO DE FORMULARIO -->
 <form>  
   <div class="form-group">
@@ -29,13 +39,13 @@
           <div class="input-group-prepend">
             <label class="input-group-text" for="inputGroupSelect01">Producto</label>
           </div>
-          <select id="select-producto" class="custom-select" >
+          <select id="select-producto" class="custom-select" onchange="obtenerPrecio()">
            <!--  <option selected>Seleccione el producto</option>
             <option value="Gotas reparadoras">Gotas reparadoras</option>
             <option value="Tinte">Tinte</option>
             <option value="Champú">Champú</option> -->
             {%  for produ in products%}
-            <option value="{{produ.nombre}}">{{produ.nombre}}</option>
+            <option value="{{produ.nombre}}" id="{{produ.precio}}">{{produ.nombre}}</option>
             {% endfor%}
           </select>
         </div>
@@ -45,8 +55,9 @@
         <div class="row">
           <div class="col-4 ">
             <div class="form-group">
-              <label for="exampleInputEmail1">Precio</label>
-              <input type="email" class="form-control" id="recioproducto" aria-describedby="emailHelp" placeholder="$10">
+              <label for="exampleInputEmail1">Precio ($)</label>
+              <input type="email" class="form-control" id="precioproducto" aria-describedby="emailHelp"
+                     placeholder="$10" disabled>
              <!--  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
             </div>
           </div>
@@ -55,7 +66,8 @@
            <div class="col-2 ">
             <div class="form-group">
               <label for="exampleInputEmail1">Cantidad</label>
-              <input type="email" class="form-control" id="cantidadproducto" aria-describedby="emailHelp" placeholder="1">
+              <input type="email" class="form-control" id="cantidadproducto" aria-describedby="emailHelp"
+                     placeholder="1" value="1" onchange="obtenerPrecio()">
              <!--  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
             </div>
           </div>
@@ -63,8 +75,9 @@
           <!-- DESCUENTO -->
           <div class="col-3">
             <div class="form-group">
-              <label for="exampleInputEmail1">Descuento</label>
-              <input type="email" class="form-control" id="descuentoproducto" aria-describedby="emailHelp" placeholder="10 = 10% ">
+              <label for="exampleInputEmail1">Descuento (%)</label>
+              <input type="email" class="form-control" id="descuentoproducto" aria-describedby="emailHelp"
+                     placeholder="10 = 10% " value="0"  onchange="obtenerPrecio()">
               <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
             </div>
           </div>
@@ -72,7 +85,7 @@
           <!-- PRECIO FINAL -->
           <div class="col-3">
             <div class="form-group">
-              <label for="exampleInputEmail1">Nuevo Precio</label>
+              <label for="exampleInputEmail1">Subtotal ($)</label>
               <input type="email" class="form-control" id="nuevoprecioproducto" aria-describedby="emailHelp" placeholder="$12" >
               <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
             </div>
@@ -128,7 +141,8 @@
           <div class="col-3">
             <div class="form-group">
               <label for="exampleInputEmail1">Descuento</label>
-              <input type="number" class="form-control" id="descuentoservicio" aria-describedby="emailHelp" placeholder="10 = 10% ">
+              <input type="number" class="form-control" id="descuentoservicio" aria-describedby="emailHelp"
+                     placeholder="10 = 10% " >
               <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
             </div>
           </div>
@@ -181,7 +195,9 @@
 
   <!-- FACTURA -->
   <div class="col-12 col-md-4">
+
     <div class="card mb-3" style="max-width: 100%;">
+
       <div class="card-header">
         <i class="fas fa-chart-area"></i>
         En venta</div>
@@ -218,6 +234,33 @@
 <script>
   document.getElementById("sidebar-to-togle").classList.add('toggled');
   document.getElementById("page-top").classList.add('sidebar-toggled')
+
+  function obtenerPrecio(){
+    var productos = document.getElementById("select-producto")
+    var precioProducto = productos.options[productos.selectedIndex].id;
+    console.log(precioProducto);
+
+    var precio = document.getElementById("precioproducto");
+    precio.value = precioProducto;
+
+    var cantidad = document.getElementById("cantidadproducto");
+    console.log(cantidad.value)
+
+    var desc = document.getElementById("descuentoproducto");
+    console.log(desc.value)
+
+    var nuevoPrecio = document.getElementById("nuevoprecioproducto");
+    console.log(nuevoPrecio.value)
+
+    if(precio.value.length != 0 && cantidad.value.length != 0){
+      nuevoPrecio.value = parseFloat(precio.value * cantidad.value).toFixed(2);
+    }
+
+    if(desc.value.length != 0 && nuevoPrecio.value.length != 0){
+      nuevoPrecio.value = parseFloat(nuevoPrecio.value - nuevoPrecio.value * desc.value / 100).toFixed(2);
+    }
+  }
+
 </script>
 <!-- JS DE FACTURAR -->
 <script src="{%static "js/facturar.js" %}"></script>

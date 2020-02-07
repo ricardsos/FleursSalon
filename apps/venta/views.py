@@ -54,11 +54,16 @@ def venta_create(request,cliente,codigo,total):
 	venta.fecha = date.today()
 	venta.total = total
 	venta.anulado = True
-	venta.estado = 'N'
+	venta.estado = 'G'
+	venta.save()
+
+	venta.codigo = obtenerCodigo(venta.id)
 	venta.save()
 	id = venta.id
 	print(id)
 	return HttpResponse(id)
+
+
 def linea_venta_servicio(request,id_venta,servicion,colaboradorn,precios,descripcion):
 	lineaServicio = LineaDeServicio()
 	venta = Venta.objects.get(id=id_venta)

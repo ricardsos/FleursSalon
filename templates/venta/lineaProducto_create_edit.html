@@ -22,7 +22,7 @@
         <div class="col-md-4 mb-3">
             <label for="producto">Producto</label>
                 <select class="custom-select" id="producto" name="producto" onchange="obtenerPrecio()" required>
-                    <option selected disabled value="">Seleccionar</option>
+                    <option selected disabled value="1">Seleccionar</option>
                     {% for p in productos %}
                     <option value="{{ p.id }}" id="{{ p.precio }}">{{ p.nombre }}</option>
                     {% endfor %}
@@ -106,7 +106,6 @@
 
         if(desc.value.length != 0 && subtotal.value.length != 0){
             nuevoPrecio.value = parseFloat(subtotal.value - subtotal.value * desc.value / 100).toFixed(2);
-
         }
     }
 

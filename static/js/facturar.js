@@ -207,5 +207,7 @@ alert("Ingrese el nombre del cliente.");
      xhttp.send();
    }
    
-  
+  alert('Venta guardada con exito');
+  location.reload();
+  return false;
 }
