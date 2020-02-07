@@ -9,7 +9,7 @@
     <form action="" method="post">{% csrf_token %}
 
         Cliente <input type="text" name="cliente" size="100" value="" required><br><br>
-        Código <input type="text" name="codigo" required><br><br>
+        Código: {{codigo}}<br><br>
         TOTAL: $ {{ venta.total }} <br><br>
         <a href="{% url 'venta:lineaServicio_create' venta.id %}">Agregar Servicio</a><br><br>
 

@@ -2,12 +2,19 @@
 {% load static %}
 {% block title%} Ventas {% endblock%}
 {%block mn%}
-<link href="{%static "css/style.css" %}" rel="stylesheet" type="text/css">
-    <h1 style="text-align: center;">Ventas</h1>
-    <form action="" method="post">{% csrf_token %}
-        <button class="btn btn-primary">Nueva venta</button>
-        <br><br>
-    </form>
+<link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css">
+
+<form action="" method="post">{% csrf_token %}
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+                <h3 style="text-align: center;">Ventas</h3>
+        </li>
+        <li class="list-group-item">
+            <button type="submit" class="btn btn-primary" >Nueva Venta</button>
+        </li>
+    </ul>
+</form>
+
     {% if ventas %}
         <!-- DataTables Example -->
         <div class="card mb-3">
@@ -16,10 +23,9 @@
             Ventas</div>
           <div class="card-body">
             <div class="table-responsive">
-              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+              <table class="table table-bordered table-hover table-sm" id="dataTableProducto" width="100%" cellspacing="0">
                 <thead>
                   <tr>
-                    <th>ID</th>
                     <th>Código</th>
                     <th>Fecha</th>
                     <th>Cliente</th>
@@ -29,7 +35,6 @@
                 </thead>
                 <tfoot>
                   <tr>
-                    <th>ID</th>
                     <th>Código</th>
                     <th>Fecha</th>
                     <th>Cliente</th>
@@ -38,34 +43,120 @@
                   </tr>
                 </tfoot>
                 <tbody>
+                <tr style="display: none">
+
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
                 {% for v in ventas %}
                         <tr>
-                            <td>{{ v.id }}</td>
                             <td>{{ v.codigo }}</td>
                             <td>{{ v.fecha }}</td>
                             <td>{{ v.cliente }}</td>
                             <td>{{ v.total }}</td>
-
-                            <td style="text-align: center;"><button class="btn btn-light"><a href="{% url 'venta:venta_show' v.id %}">
-                                <i class="fas fa-eye"></i></a></button></td>
-                            <td style="text-align: center;"><button class="btn btn-light"><a href="{% url 'venta:venta_edit' v.id %}"></i>
-                                <i class="fas fa-edit"></i></a></button></td>
-                            <td style="text-align: center;"><button class="btn btn-light"><a href="{% url 'venta:venta_delete' v.id %}">
-                                <i class="far fa-trash-alt"></i></a></button></td>
+                            <td style="text-align: center;">
+                                <a href="{% url 'venta:venta_show' v.id %}"  data-toggle="tooltip" data-placement="top" title="Ver">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                            </td>
+                            <td style="text-align: center;">
+                                <a href="{% url 'venta:venta_edit' v.id %}" data-toggle="tooltip" data-placement="top" title="Editar">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                            </td>
+                            <td style="text-align: center;">
+                                <a href="{% url 'venta:venta_delete' v.id %}" data-toggle="tooltip" data-placement="top" title="Eliminar">
+                                    <i class="far fa-trash-alt"></i>
+                                </a>
+                            </td>
                         </tr>
                     {% endfor %}
-                </tbody>
+               </tbody>
               </table>
             </div>
           </div>
-          <div class="card-footer small text-muted"></div>
+          <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
         </div>
         {% else %}
         <div class="alert alert-dark" role="alert">
             ¡Aún no se registran ventas!
         </div>
-       
     {% endif %}
+
+
+
+
+<!-- PRUEBA DE DATATABLE
+<div class="card mb-3">
+  <div class="card-header">
+    <i class="fas fa-table"></i>
+    Data Table Example</div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover table-sm" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+          <tr>
+
+            <th>Codigo</th>
+            <th>Fecha</th>
+            <th>Cliente</th>
+            <th>Total ($)</th>
+              <th></th>
+              <th></th>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+
+            <th>Codigo</th>
+            <th>Fecha</th>
+            <th>Cliente</th>
+            <th>Total ($)</th>
+              <th></th>
+              <th></th>
+          </tr>
+        </tfoot>
+        <tbody>
+          <tr style="display: none">
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        {% for v in ventas %}
+                <tr>
+                    <td>{{v.codigo}}</td>
+                    <td>{{v.fecha}}</td>
+                    <td>{{v.cliente}}</td>
+                    <td>{{v.total}}</td>
+                    <td style="text-align: center;">
+                        <a href="{% url 'venta:venta_show' v.id %}"  data-toggle="tooltip" data-placement="top" title="Ver">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                    </td>
+                    <td style="text-align: center;">
+                        <a href="{% url 'venta:venta_edit' v.id %}" data-toggle="tooltip" data-placement="top" title="Editar">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                    </td>
+                    <td style="text-align: center;">
+                        <a href="{% url 'venta:venta_delete' v.id %}" data-toggle="tooltip" data-placement="top" title="Eliminar">
+                            <i class="far fa-trash-alt"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+</div>
+-->
+
 {% endblock %}
-<button class="btn btn-primary"><a href="{% url 'venta:venta_show' v.id %}">Ver</a></button>
-<a href="{% url 'venta:venta_show' v.id %}">Ver</a>

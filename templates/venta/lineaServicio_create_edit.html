@@ -45,12 +45,22 @@
 </form>
 -->
 
-<ul class="list-group list-group-flush">
-    <li class="list-group-item">
-        <h5>Nuevo Servicio</h5>
-    </li>
-</ul>
-<br>
+
+
+<form action="" method="post">{% csrf_token %}
+    <ul class="list-group list-group-flush">
+        <h6>
+            <li class="list-group-item">
+                <h5>Nuevo Servicio</h5>
+            </li>
+        </h6>
+        <li class="list-group-item">
+        </li>
+    </ul>
+</form>
+
+
+
 <form action="" method="post">{% csrf_token %}
     <div class="form-row">
 
@@ -92,8 +102,8 @@
             <div class="input-group-text">
               <input type="checkbox" aria-label="Checkbox for following text input" onClick="habilitar()" >
             </div>
-              <input type="text" class="form-control" aria-label="Text input with checkbox" placeholder=""
-                      onchange="hacerDescuento()" name="descuento" id="descuento" disabled>
+              <input type="text" class="form-control" aria-label="Text input with checkbox" value="0"
+                      onchange="hacerDescuento()" name="descuento" id="descuento">
           </div>
         </div>
 
@@ -108,7 +118,7 @@
   <div class="form-row">
       <div class="col-md-8 mb-3">
         <label for="descripcion">Descripción</label>
-        <textarea class="form-control" id="descripcion" name="descripcion" rows="2" required></textarea>
+        <textarea class="form-control" id="descripcion" name="descripcion" rows="3" required></textarea>
       </div>
   </div>
 

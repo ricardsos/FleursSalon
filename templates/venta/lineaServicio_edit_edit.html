@@ -5,7 +5,7 @@
     <form action="" method="post">{% csrf_token %}
         <ul class="list-group list-group-flush">
         <li class="list-group-item">
-            <h5>Editar servicio "{{ lineaServicio.servicio }}"</h5>
+            <h5>Editar Servicio "{{ lineaServicio.servicio }}"</h5>
         </li>
     </ul>
 <br>
@@ -45,7 +45,8 @@
         <div class="form-row">
             <div class="col-md-3 mb-3">
               <label for="precio">Precio ($)</label>
-              <input type="text" class="form-control" id="precio" name="precio" value="{{ lineaServicio.precio }}" required>
+              <input type="text" class="form-control" id="precio" name="precio" value="{{ lineaServicio.precio }}"
+                     onchange="hacerDescuento()" required>
             </div>
     
     
@@ -56,7 +57,8 @@
                   <input type="checkbox" aria-label="Checkbox for following text input" onClick="habilitar()" >
                 </div>
                   <input type="text" class="form-control" aria-label="Text input with checkbox" placeholder=""
-                         name="descuento" id="descuento" value="{{ lineaServicio.descuento }}" disabled>
+                         name="descuento" id="descuento" value="{{ lineaServicio.descuento }}"
+                         onchange="hacerDescuento()" >
               </div>
             </div>
     
@@ -71,7 +73,7 @@
       <div class="form-row">
           <div class="col-md-8 mb-3">
             <label for="descripcion">Descripción</label>
-            <input type="text" class="form-control" id="descripcion" name="descripcion" value="{{ lineaServicio.descripcion }}" rows="2" required></input>
+            <input type="text" class="form-control" id="descripcion" name="descripcion" value="{{ lineaServicio.descripcion }}" rows="3" required></input>
           </div>
       </div>
       <button class="btn btn-primary" type="submit">Guardar</button>
@@ -83,6 +85,22 @@
     function habilitar(){
         var desc = document.getElementById('descuento');
         desc.disabled = !desc.disabled
+    }
+
+    function hacerDescuento(){
+        var precio = document.getElementById('precio');
+        var desc = document.getElementById('descuento');
+        var nuevoPrecio = document.getElementById('nuevoprecio');
+
+        if(desc.value.length != 0 && precio.value.length != 0){
+            n = precio.value - precio.value * desc.value / 100;
+            nuevoPrecio.value = parseFloat(n).toFixed(2);
+
+        }
+
+        if(precio.value.length != 0){
+            precio.value = parseFloat(precio.value).toFixed(2);
+        }
     }
 </script>
 

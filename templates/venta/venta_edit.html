@@ -5,17 +5,22 @@
 
 <form action="" method="post">{% csrf_token %}
     <ul class="list-group list-group-flush">
-        <li class="list-group-item">
-            Cliente
-            <input class="form-control form-control-sm col-md-5" type="text" placeholder="Editar nombre"
-                   name="cliente" value="{{ venta.cliente }}">
-            Código
-            <span class="badge badge-primary badge-pill">{{ venta.codigo }}</span>
-            Fecha
-            <span class="badge badge-primary badge-pill">{{ venta.fecha }}</span>
-            TOTAL
-            <span class="badge badge-primary badge-pill">$ {{ venta.total }}</span>
-        </li>
+
+            <li class="list-group-item">
+                <div class="alert alert-info" role="alert">
+                  Editando la venta del cliente "{{ venta.cliente }}"
+                </div>
+                Cliente
+                <input class="form-control form-control-sm col-md-5" type="text" placeholder="Editar nombre"
+                       name="cliente" value="{{ venta.cliente }}">
+                Código
+                <span class="badge badge-primary badge-pill">{{ venta.codigo }}</span>
+                Fecha
+                <span class="badge badge-primary badge-pill">{{ venta.fecha }}</span>
+                TOTAL
+                <span class="badge badge-primary badge-pill">$ {{ venta.total }}</span>
+            </li>
+
         <li class="list-group-item">
           <div class="row">
             <div class="col-8">
@@ -34,7 +39,7 @@
     {% if lineasServicio %}
         <div class="card mb-3">
           <div class="card-header">
-            <i class="fas fa-table"></i>
+            <i class="fas fa-cut"></i>
             Servicios</div>
           <div class="card-body">
             <div class="table-responsive">
@@ -71,12 +76,12 @@
                     <td>{{ ls.nuevoPrecio }}</td>
                     <td>{{ ls.descripcion }}</td>
                     <td style="text-align: center;">
-                        <a href="{% url 'venta:lineaServicio_edit_edit' ls.id %}">
+                        <a href="{% url 'venta:lineaServicio_edit_edit' ls.id %}" data-toggle="tooltip" data-placement="top" title="Editar">
                             <i class="fas fa-edit"></i>
                         </a>
                     </td>
                     <td style="text-align: center;">
-                        <a href="{% url 'venta:lineaServicio_delete_edit' ls.id %}">
+                        <a href="{% url 'venta:lineaServicio_delete_edit' ls.id %}" data-toggle="tooltip" data-placement="top" title="Eliminar">
                             <i class="far fa-trash-alt"></i>
                         </a>
                     </td>
@@ -94,7 +99,7 @@
         {% if lineasProducto %}
         <div class="card mb-3">
           <div class="card-header">
-            <i class="fas fa-table"></i>
+            <i class="fas fa-box"></i>
             Productos</div>
           <div class="card-body">
             <div class="table-responsive">
@@ -132,18 +137,16 @@
                                                 <td>{{ lp.subtotal }}</td>
                         <td>{{ lp.descuento }}</td>
                         <td>{{ lp.nuevoPrecio }}</td>
-
                         <td style="text-align: center;">
-                            <a href="{% url 'venta:lineaProducto_edit_edit' lp.id %}">
+                            <a href="{% url 'venta:lineaProducto_edit_edit' lp.id %}" data-toggle="tooltip" data-placement="top" title="Editar">
                                 <i class="fas fa-edit"></i>
                             </a>
                         </td>
                         <td style="text-align: center;">
-                            <a href="{% url 'venta:lineaProducto_delete_edit' lp.id %}">
+                            <a href="{% url 'venta:lineaProducto_edit_edit' lp.id %}" data-toggle="tooltip" data-placement="top" title="Eliminar">
                                 <i class="far fa-trash-alt"></i>
                             </a>
                         </td>
-
                     </tr>
                 {% endfor %}
                 </tbody>
@@ -153,4 +156,7 @@
           <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
         </div>
         {% endif  %}
+
+<script>
+</script>
 {% endblock %}

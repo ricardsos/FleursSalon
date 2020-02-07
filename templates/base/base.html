@@ -14,13 +14,13 @@
 
   <!-- Custom fonts for this template-->
   <!-- {%static "vendor/bootstrap/css/bootstrap.min.css" %} -->
-  <link href="{%static "vendor/fontawesome-free/css/all.min.css" %}" rel="stylesheet" type="text/css">
+  <link href="{%static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
 
   <!-- Page level plugin CSS-->
-  <link href="{%static "vendor/datatables/dataTables.bootstrap4.css" %}" rel="stylesheet">
+  <link href="{%static 'vendor/datatables/dataTables.bootstrap4.css' %}" rel="stylesheet">
 
   <!-- Custom styles for this template-->
-  <link href="{%static "css/sb-admin.css" %}" rel="stylesheet">
+  <link href="{%static 'css/sb-admin.css' %}" rel="stylesheet">
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
 </head>
@@ -755,24 +755,54 @@
   </div>
 
   <!-- Bootstrap core JavaScript-->
-  <script src="{%static "vendor/jquery/jquery.min.js" %}"></script>
-  <script src="{%static "vendor/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
+  <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
   <!-- Core plugin JavaScript-->
-  <script src="{%static "vendor/jquery-easing/jquery.easing.min.js" %}"></script>
+  <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
 
   <!-- Page level plugin JavaScript-->
-  <script src="{%static "vendor/chart.js/Chart.min.js" %}"></script>
-  <script src="{%static "vendor/datatables/jquery.dataTables.js" %}"></script>
-  <script src="{%static "vendor/datatables/dataTables.bootstrap4.js" %}"></script>
+  <script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
+  <script src="{% static 'vendor/datatables/jquery.dataTables.js' %}"></script>
+  <script src="{% static 'vendor/datatables/dataTables.bootstrap4.js' %}"></script>
 
   <!-- Custom scripts for all pages-->
-  <script src="{%static "js/sb-admin.min.js" %}"></script>
+  <script src="{% static 'js/sb-admin.min.js' %}"></script>
 
   <!-- Demo scripts for this page-->
-  <script src="{%static "js/demo/datatables-demo.js" %}"></script>
-  <script src="{%static "js/demo/chart-area-demo.js" %}"></script>
+  <script src="{% static 'js/demo/datatables-demo.js' %}"></script>
+  <script src="{% static 'js/demo/chart-area-demo.js' %}"></script>
+  <script>
+          $('[data-toggle="tooltip"]').tooltip();
 
+
+          var modal;
+
+function abrir_modal(url, titulo)
+{
+    modal = $('#popup').dialog(
+    {
+        title: titulo,
+        modal: true,
+        width: 500,
+        resizable: false
+    }).dialog('open').load(url)
+}
+
+function cerrar_modal()
+{
+    modal.dialog("close");
+}
+
+$(document).ready(function()
+{
+    var table = $('#tabla').dataTable( {
+        "language": {
+                url: "/static/localizacion/es_ES.json"
+        }
+    } );
+});
+  </script>
 </body>
 
 </html>

@@ -1,71 +1,124 @@
 
 {% extends 'base/base.html'%}
 {% load static %}
-{% block title%} {{ venta.codigo }} {% endblock%}
+{% block title%} Venta {% endblock%}
 {%block mn%}
-<h5>Código: {{ venta.codigo }}</h5>
-<h5>Fecha: {{ venta.fecha }}</h5>
-<h5>Cliente: {{ venta.cliente }}</h5>
 
+<form action="" method="post">{% csrf_token %}
+    <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <div class="alert alert-primary" role="alert">
+                  Mostrando la venta del cliente "{{ venta.cliente }}"
+                </div>
+                Código
+                <span class="badge badge-primary badge-pill">{{ venta.codigo }}</span>
+                Fecha
+                <span class="badge badge-primary badge-pill">{{ venta.fecha }}</span>
+                Cliente
+                <span class="badge badge-primary badge-pill">{{ venta.cliente }}</span>
+                TOTAL
+                <span class="badge badge-primary badge-pill">$ {{ venta.total }}</span>
+            </li>
+        <li class="list-group-item">
+            <a class="btn btn-outline-danger" href="{% url 'venta:venta_list' %}" role="button">Atrás</a>
+        </li>
+    </ul>
+</form>
 
 {% if lineasServicio %}
-<h2>Servicios</h2>
-<table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col">Servicio</th>
-        <th scope="col">Colaborador</th>
-        <th scope="col">Precio</th>
-        <th scope="col">Descuento</th>
-        <th scope="col">Precio final</th>
-        <th scope="col">Descripción</th>
-      </tr>
-    </thead>
-    <tbody>
-        {% for ls in lineasServicio %}
-        <tr>
-            <td>{{ ls.servicio }}</td>
-            <td>{{ ls.colaborador.first_name }} {{ ls.colaborador.last_name }}</td>
-            <td>{{ ls.precio }}</td>
-            <td>{{ ls.descuento }}</td>
-            <td>{{ ls.nuevoPrecio }}</td>
-            <td>{{ ls.descripcion }}</td>
-    
-        </tr>
-        {% endfor %}
-    </tbody>
-  </table>
-{% endif %}
+    <div class="card mb-3">
+          <div class="card-header">
+            <i class="fas fa-cut"></i>
+            Servicios</div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover table-sm" id="dataTableServicio" width="100%" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th>Servicio</th>
+                    <th>Colaborador</th>
+                    <th>Precio</th>
+                    <th>Desc (%)</th>
+                    <th>Precio final</th>
+                    <th>Descripción</th>
+                  </tr>
+                </thead>
+                <tfoot>
+                  <tr>
+                    <th>Servicio</th>
+                    <th>Colaborador</th>
+                    <th>Precio</th>
+                    <th>Desc (%)</th>
+                    <th>Precio final</th>
+                    <th>Descripción</th>
+                  </tr>
+                </tfoot>
+                <tbody>
+                {% for ls in lineasServicio %}
+                  <tr>
+                    <td>{{ ls.servicio }}</td>
+                    <td>{{ ls.colaborador.first_name }} {{ ls.colaborador.last_name }}</td>
+                    <td>{{ ls.precio }}</td>
+                    <td>{{ ls.descuento }}</td>
+                    <td>{{ ls.nuevoPrecio }}</td>
+                    <td>{{ ls.descripcion }}</td>
+
+                  </tr>
+                {% endfor %}
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card-footer small text-muted">Updated yesterday at 11:59 PM </div>
+        </div>
+{% endif  %}
 
 {% if lineasProducto %}
-<h2>Productos</h2>
-    <table class="table table-striped">
-    <thead>
-     <tr>
-        <th scope="col">Producto</th>
-        <th scope="col">Cantidad</th>
-        <th scope="col">Precio</th>
-        <th scope="col">Descuento</th>
-        <th scope="col">Precio final</th>
-        <th scope="col">Subtotal</th>
-    </tr>
-    </thead>
-    {% for lp in lineasProducto %}
-    <tr>
-        <td>{{ lp.producto.nombre }}</td>
-        <td>{{ lp.cantidad }}</td>
-        <td>{{ lp.producto.precio }}</td>
-        <td>{{ lp.descuento }}</td>
-        <td>{{ lp.nuevoPrecio }}</td>
-        <td>{{ lp.subtotal }}</td>
-    </tr>
-    {% endfor %}
-</table>
-{% endif %}
-<br>
-<h4>TOTAL: $ {{ venta.total }}</h4><br><br>
-<button class="btn btn-outline-primary"><a  href="{% url 'venta:venta_list' %}">
-<i class="fas fa-arrow-alt-circle-left"></i> Atrás</a></button>
-
+    <div class="card mb-3">
+      <div class="card-header">
+          <i class="fas fa-box"></i>
+        Productos</div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover table-sm" id="dataTableProducto" width="100%" cellspacing="0">
+            <thead>
+              <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio Uni</th>
+                <th>Subtotal</th>
+                <th>Desc (%)</th>
+                <th>Subtotal final</th>
+              </tr>
+            </thead>
+            <tfoot>
+              <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio Uni</th>
+                <th>Subtotal</th>
+                <th>Desc (%)</th>
+                <th>Subtotal final</th>
+              </tr>
+            </tfoot>
+            <tbody>
+            {% for lp in lineasProducto %}
+                <tr>
+                    <td>{{ lp.producto.nombre }}</td>
+                    <td>{{ lp.cantidad }}</td>
+                    <td>{{ lp.producto.precio }}</td>
+                    <td>{{ lp.subtotal }}</td>
+                    <td>{{ lp.descuento }}</td>
+                    <td>{{ lp.nuevoPrecio }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+    </div>
+{% endif  %}
 
 {% endblock %}

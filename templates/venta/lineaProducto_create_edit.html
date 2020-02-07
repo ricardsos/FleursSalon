@@ -35,12 +35,16 @@
 </form>
 -->
 
-<ul class="list-group list-group-flush">
-    <li class="list-group-item">
-        <h5>Nuevo Producto</h5>
-    </li>
-</ul>
-<br>
+<form action="" method="post">{% csrf_token %}
+    <ul class="list-group list-group-flush">
+        <h6>
+            <li class="list-group-item">
+        <h5>Nuevo Producto</h5>            </li>
+        </h6>
+        <li class="list-group-item">
+        </li>
+    </ul>
+</form>
 
 <form action="" method="post">{% csrf_token %}
     <div class="form-row">
@@ -50,7 +54,7 @@
                 <select class="custom-select" id="producto" name="producto" onchange="obtenerPrecio()" required>
                     <option selected disabled value="">Seleccionar</option>
                     {% for p in productos %}
-                    <option value="{{ p.id }}" id="{{ p.precio }}">{{ p.nombre }} </option>
+                    <option value="{{ p.id }}" id="{{ p.precio }}">{{ p.nombre }}</option>
                     {% endfor %}
                 </select>
         </div>
@@ -110,9 +114,14 @@
         var cantidad = document.getElementById('cantidad');
         var subtotal = document.getElementById('subtotal');
 
+
         if(cantidad.value.length != 0 && precio.value.length != 0){
             subtotal.value = parseFloat(cantidad.value * precioProducto).toFixed(2);
+                    console.log('IF')
         }
+        console.log(precioProducto)
+        console.log(cantidad.value)
+        console.log(subtotal.value)
 
     }
 

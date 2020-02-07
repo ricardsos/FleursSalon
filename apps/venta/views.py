@@ -14,6 +14,25 @@ import json
 def facturar(request):
 	return render(request, 'venta/facturar.html')
 
+
+#FUNCIONES
+
+# Funcion para obtener el codigo de la venta
+def obtenerCodigo(idVenta):
+	fecha = date.today()
+	if fecha.day <= 9:
+		if fecha.month <= 9:
+			codigo = f'{0}{fecha.day}{0}{fecha.month}{fecha.year}{idVenta}'
+		else:
+			codigo = f'{0}{fecha.day}{fecha.month}{fecha.year}{idVenta}'
+	else:
+		if fecha.month <= 9:
+			codigo = f'{fecha.day}{0}{fecha.month}{fecha.year}{idVenta}'
+		else:
+			codigo = f'{fecha.day}{fecha.month}{fecha.year}{idVenta}'
+	print(codigo)
+	return codigo
+
 # VENTAS
 
 
@@ -21,6 +40,7 @@ def facturar(request):
 def venta_list(request):
 	# ventas = Venta.objects.all()
 	ventas = Venta.objects.filter(estado='G')
+
 	if request.method == 'POST':
 		venta = Venta()
 		venta.cliente = 'CLIENTE SIN ASIGNAR'
@@ -39,6 +59,7 @@ def venta_list(request):
 def venta_list_delete(request, id):
 	venta = Venta.objects.get(id=id)
 	venta.delete()
+	print('venta_list_delete')
 	return redirect('venta:venta_list')
 	return render(request, template_name='venta/venta_create.html', context={'id': id})
 
@@ -83,11 +104,12 @@ def lineas_list(request, id):
 	lineasServicio = LineaDeServicio.objects.filter(venta__id=id)
 	lineasProducto = LineaDeProducto.objects.filter(venta__id=id)
 
+	codigo = obtenerCodigo(id)
 	venta = Venta.objects.get(id=id)
 	total = 0
 	if request.method == 'POST':
 		venta.cliente = request.POST.get('cliente')
-		venta.codigo = request.POST.get('codigo')  # Codigo generado por el sistema
+		venta.codigo = codigo  # Codigo generado por el sistema
 		venta.fecha = date.today()
 		venta.anulado = False
 		venta.estado = 'G'
@@ -101,7 +123,7 @@ def lineas_list(request, id):
 		total += lineaProducto.nuevoPrecio
 	venta.total = total
 	venta.save()
-	return render(request, template_name='venta/venta_create.html', context={'venta': venta,
+	return render(request, template_name='venta/venta_create.html', context={'venta': venta, 'codigo': codigo,
 																					'lineasServicio': lineasServicio,
 																					'lineasProducto': lineasProducto})
 
@@ -263,7 +285,7 @@ def lineaServicio_edit_edit(request, id):
 		lineaServicio.colaborador = colaborador
 
 		lineaServicio.precio = request.POST.get('precio')
-		lineaServicio.descuento = 0  # request.POST.get('descuento')
+		lineaServicio.descuento = request.POST.get('descuento')
 		lineaServicio.nuevoPrecio = request.POST.get('nuevoprecio')
 		lineaServicio.descripcion = request.POST.get('descripcion')
 		lineaServicio.save()
@@ -446,7 +468,7 @@ def lineaProducto_edit_edit(request, id):
 		lineaProducto.producto = producto
 
 		lineaProducto.cantidad = request.POST.get('cantidad')
-		lineaProducto.descuento = 0  # request.POST.get('descuento')
+		lineaProducto.descuento = request.POST.get('descuento')
 		lineaProducto.nuevoPrecio = request.POST.get('nuevoprecio')
 		lineaProducto.subtotal = request.POST.get('subtotal')
 		lineaProducto.save()

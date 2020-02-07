@@ -14,7 +14,7 @@ class Venta(models.Model):
 	)
 
 	cliente = models.CharField('Cliente', max_length=100, blank=False, null=False)
-	codigo = models.IntegerField('Código', blank=False, null=False)
+	codigo = models.CharField('Código',max_length=100, blank=False, null=False)
 	fecha = models.DateField('Fecha', blank=False, null=False)
 	total = models.DecimalField('TOTAL', max_digits=5, decimal_places=2, blank=True, null=False, validators =
 			[MinValueValidator(0)], default=0)
