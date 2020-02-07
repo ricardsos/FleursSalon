@@ -2,18 +2,71 @@
 {% load static %}
 {% block title%} Venta {% endblock%}
 {% block mn %}
-    <form action="" method="post">{% csrf_token %}
-        <h1>¿Desea eliminar el servicio "{{ lineaServicio.servicio }}" de la venta?</h1>
-        <h4>Servicio: {{ lineaServicio.servicio }}</h4>
-        <h4>Colaborador: {{ lineaServicio.colaborador }}</h4>
-        <h4>Precio: {{ lineaServicio.precio }}</h4>
-        <h4>Descuento: {{ lineaServicio.descuento }}</h4>
-        <h4>Precio final: {{ lineaServicio.nuevoPrecio }}</h4>
-        <h4>Descripción: {{ lineaServicio.descripcion }}</h4>
+
+<form action="" method="post">{% csrf_token %}
+    <ul class="list-group list-group-flush">
 
         <li class="list-group-item">
-            <button type="submit" class="btn btn-danger" >Eliminar</button>
-            <a class="btn btn-outline-danger" href="{% url 'venta:venta_edit' venta.id %}" role="button">Atrás</a>
+            <div class="alert alert-danger" role="alert">
+            ¿Desea eliminar el servicio "{{ lineaServicio.servicio }}" de la venta?
+            </div>
         </li>
-    </form>
+
+    </ul>
+
+            <br>
+        <div class="form-row">
+            <div class="col-md-4 mb-3">
+              <label for="servicio">Servicio</label>
+              <select class="custom-select" id="servicio" name="servicio" required disabled>
+                <option value="{{ lineaServicio.servicio }}">{{ lineaServicio.servicio }}</option>
+              </select>
+
+            </div>
+
+            <div class="col-md-4 mb-3">
+              <label for="colaborador">Colaborador</label>
+              <select class="custom-select" id="colaborador" name="colaborador" required disabled>
+                <option value="{{ lineaServicio.colaborador.last_name }}">{{ lineaServicio.colaborador.first_name }}
+                    {{ lineaServicio.colaborador.last_name }}</option>
+              </select>
+            </div>
+        </div>
+
+
+        <div class="form-row">
+            <div class="col-md-3 mb-3">
+              <label for="precio">Precio ($)</label>
+              <input type="text" class="form-control" id="precio" name="precio" value="{{ lineaServicio.precio }}"
+                     disabled required>
+            </div>
+            <div class="mb-3 col-md-2">
+              <label for="descuento">Descuento (%)</label>
+              <div class="input-group-prepend">
+                <div class="input-group-text">
+                  <input type="checkbox" aria-label="Checkbox for following text input" disabled>
+                </div>
+                  <input type="text" class="form-control" aria-label="Text input with checkbox" placeholder=""
+                         name="descuento" id="descuento" value="{{ lineaServicio.descuento }}" disabled>
+              </div>
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="nuevoprecio">Precio final ($)</label>
+              <input type="text" class="form-control" id="nuevoprecio" name="nuevoprecio"
+                     value="{{ lineaServicio.nuevoPrecio }}"  required disabled>
+            </div>
+        </div>
+
+      <div class="form-row">
+          <div class="col-md-8 mb-3">
+            <label for="descripcion">Descripción</label>
+            <input type="text" class="form-control" id="descripcion" name="descripcion"
+                   value="{{ lineaServicio.descripcion }}" rows="3" required disabled>
+          </div>
+      </div>
+
+    <button type="submit" class="btn btn-danger" >Eliminar</button>
+      <a class="btn btn-outline-danger" href="{% url 'venta:venta_edit' venta.id %}" role="button">Atrás</a>
+</form>
+
 {% endblock %}

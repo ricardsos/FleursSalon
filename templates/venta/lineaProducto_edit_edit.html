@@ -4,12 +4,14 @@
 {%block mn%}
 
 <form action="" method="post">{% csrf_token %}
-     <ul class="list-group list-group-flush">
-    <li class="list-group-item">
-        <h5>Editar producto "{{ lineaProducto.producto.nombre }}"</h5>
-    </li>
-</ul>
-<br>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+            <div class="alert alert-info" role="alert">
+            Editando producto "{{ lineaProducto.producto.nombre }}" de la venta
+            </div>
+        </li>
+    </ul>
+    <br>
     <div class="form-row">
 
             <div class="col-md-4 mb-3">
@@ -51,7 +53,7 @@
               <input type="checkbox" aria-label="Checkbox for following text input" onClick="habilitar()" >
             </div>
               <input type="text" class="form-control" aria-label="Text input with checkbox" placeholder=""
-                     onchange="hacerDescuento()" name="descuento" id="descuento" value="{{ lineaProducto.descuento }}" disabled required>
+                     onchange="hacerDescuento()" name="descuento" id="descuento" value="{{ lineaProducto.descuento }}" required>
           </div>
         </div>
 

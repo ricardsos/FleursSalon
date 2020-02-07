@@ -3,18 +3,65 @@
 {% block title%} Venta {% endblock%}
 {% block mn %}
 
-    <form action="" method="post">{% csrf_token %}
-        <h1>¿Desea eliminar el producto "{{ lineaProducto.producto.nombre }}" de la venta?</h1>
-        <h4>Producto: {{ lineaProducto.producto.nombre }}</h4>
-        <h4>Cantidad: {{ lineaProducto.cantidad }}</h4>
-        <h4>Precio: {{ lineaProducto.producto.precio }}</h4>
-        <h4>Descuento: {{ lineaProducto.descuento }}</h4>
-        <h4>Precio final: {{ lineaProducto.nuevoPrecio }}</h4>
-        <h4>Subtotal: {{ lineaProducto.subtotal }}</h4>
+<form action="" method="post">{% csrf_token %}
+    <ul class="list-group list-group-flush">
         <li class="list-group-item">
-            <button type="submit" class="btn btn-danger" >Eliminar</button>
-            <a class="btn btn-outline-danger" href="{% url 'venta:venta_edit' venta.id %}" role="button">Atrás</a>
-  </button>
-    </form>
+            <div class="alert alert-danger" role="alert">
+            ¿Desea eliminar el producto "{{ lineaProducto.producto.nombre }}" de la venta?
+            </div>
+        </li>
+    </ul>
+    <br>
+    <div class="form-row">
+        <div class="col-md-4 mb-3">
+          <label for="producto">Producto</label>
+          <select class="custom-select" name="producto" id="producto"  required disabled>
+            <option value="{{ lineaProducto.producto.id }}" id="{{ lineaProducto.producto.precio }}">
+                {{ lineaProducto.producto.nombre }}</option>
 
+          </select>
+        </div>
+
+        <div class="col-md-2 mb-3">
+            <label for="cantidad">Cantidad</label>
+                <input type="text" class="form-control" name="cantidad" id="cantidad"
+                       value="{{ lineaProducto.cantidad }}" disabled required>
+        </div>
+
+        <div class="col-md-2 mb-3">
+          <label for="subtotal">Subtotal ($)</label>
+          <input type="text" class="form-control" id="subtotal" name="subtotal" value="{{ lineaProducto.subtotal }}"
+                 required disabled>
+        </div>
+    </div>
+
+
+    <div class="form-row">
+        <div class="col-md-3 mb-3">
+          <label for="precio">Precio Unitario ($)</label>
+          <input type="text" class="form-control" id="precio" name="precio" value="{{ lineaProducto.producto.precio }}"
+                 required disabled>
+        </div>
+
+        <div class="mb-3 col-md-2">
+          <label for="descuento">Descuento (%)</label>
+          <div class="input-group-prepend">
+            <div class="input-group-text">
+              <input type="checkbox" aria-label="Checkbox for following text input" disabled>
+            </div>
+              <input type="text" class="form-control" aria-label="Text input with checkbox" placeholder=""
+                     disabled name="descuento" id="descuento" value="{{ lineaProducto.descuento }}" required>
+          </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+          <label for="nuevoprecio">Nuevo Subtotal ($)</label>
+          <input type="text" class="form-control" id="nuevoprecio" name="nuevoprecio"
+                 value="{{ lineaProducto.nuevoPrecio }}"  required disabled>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-danger" >Eliminar</button>
+    <a class="btn btn-outline-danger" href="{% url 'venta:venta_edit' venta.id %}" role="button">Atrás</a>
+</form>
 {% endblock %}

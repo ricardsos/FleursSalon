@@ -4,43 +4,13 @@
 {%block mn%}
 
 
-<!--
-<h1>Nuevo Producto</h1>
-<form action="" method="post">{% csrf_token %}
-
-    Productos
-    <select name="producto" id="producto">
-        {% for p in productos %}
-        <option value="{{ p.nombre }}">{{ p.nombre }} Precio $ {{ p.precio }}</option>
-            Precio $ {{ p.precio }}
-
-        {% endfor %}
-    </select>
-
-    <br><br>
-    Cantidad <input type="number" name="cantidad" id="cantidad"><br><br>
-
-
-    <input type="checkbox" name="check" onClick="habilitar()"> Descuento (%)
-    <input type="text" name="descuento" id="descuento" disabled><br><br>
-
-    Nuevo precio <input type="text" name="nuevoprecio" id="nuevoprecio">
-    <br><br>
-
-    Subtotal <input type="text" name="subtotal" id="subtotal" min="1" max="1000000000">
-    <br><br>
-    <input type="submit" value="Agregar">
-    <a href="{% url 'venta:venta_edit' venta.id %}">Atrás</a><br>
-
-</form>
--->
-
 <form action="" method="post">{% csrf_token %}
     <ul class="list-group list-group-flush">
-        <h6>
-            <li class="list-group-item">
-        <h5>Nuevo Producto</h5>            </li>
-        </h6>
+        <li class="list-group-item">
+                        <div class="alert alert-success" role="alert">
+                Agregando nuevo producto a la venta
+            </div>
+        </li>
         <li class="list-group-item">
         </li>
     </ul>
@@ -61,7 +31,7 @@
 
         <div class="col-md-2 mb-3">
             <label for="cantidad">Cantidad</label>
-                <input type="text" class="form-control" name="cantidad" id="cantidad" value="" onchange="obtenerPrecio()" required>
+                <input type="text" class="form-control" name="cantidad" id="cantidad" value="" onchange="obtenerPrecio(); hacerDescuento()" required>
         </div>
 
               <div class="col-md-2 mb-3">
@@ -84,8 +54,8 @@
             <div class="input-group-text">
               <input type="checkbox" aria-label="Checkbox for following text input" onClick="habilitar()" >
             </div>
-              <input type="text" class="form-control" aria-label="Text input with checkbox" placeholder=""
-                     onchange="hacerDescuento()" name="descuento" id="descuento" disabled required>
+              <input type="text" class="form-control" aria-label="Text input with checkbox" value="0"
+                     onchange="hacerDescuento()" name="descuento" id="descuento" required>
           </div>
         </div>
 

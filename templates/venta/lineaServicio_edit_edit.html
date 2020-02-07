@@ -4,11 +4,13 @@
 {%block mn%}
     <form action="" method="post">{% csrf_token %}
         <ul class="list-group list-group-flush">
-        <li class="list-group-item">
-            <h5>Editar Servicio "{{ lineaServicio.servicio }}"</h5>
-        </li>
-    </ul>
-<br>
+            <li class="list-group-item">
+                <div class="alert alert-info" role="alert">
+                Editando servicio "{{ lineaServicio.servicio }}" de la venta
+                </div>
+            </li>
+        </ul>
+        <br>
         <div class="form-row">
 
             <div class="col-md-4 mb-3">

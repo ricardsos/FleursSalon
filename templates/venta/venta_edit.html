@@ -11,7 +11,7 @@
                   Editando la venta del cliente "{{ venta.cliente }}"
                 </div>
                 Cliente
-                <input class="form-control form-control-sm col-md-5" type="text" placeholder="Editar nombre"
+                <input class="form-control form-control-sm col-md-5" type="text" placeholder="Editar cliente"
                        name="cliente" value="{{ venta.cliente }}">
                 Código
                 <span class="badge badge-primary badge-pill">{{ venta.codigo }}</span>
@@ -143,7 +143,7 @@
                             </a>
                         </td>
                         <td style="text-align: center;">
-                            <a href="{% url 'venta:lineaProducto_edit_edit' lp.id %}" data-toggle="tooltip" data-placement="top" title="Eliminar">
+                            <a href="{% url 'venta:lineaProducto_delete_edit' lp.id %}" data-toggle="tooltip" data-placement="top" title="Eliminar">
                                 <i class="far fa-trash-alt"></i>
                             </a>
                         </td>
@@ -157,6 +157,6 @@
         </div>
         {% endif  %}
 
-<script>
+<script language="javascript">
 </script>
 {% endblock %}
