@@ -14,10 +14,14 @@ class Venta(models.Model):
 	)
 
 	cliente = models.CharField('Cliente', max_length=100, blank=False, null=False)
+	email = models.CharField('E-mail', max_length=50, blank=False, null=False)
+	telefono = models.IntegerField('Teléfono', blank=False, null=False)
 	codigo = models.CharField('Código',max_length=100, blank=False, null=False)
 	fecha = models.DateField('Fecha', blank=False, null=False)
+	subtotal = models.DecimalField('Subtotal', max_digits=5, decimal_places=2, blank=True, null=False, validators =
+			[MinValueValidator(0)], default=0)  # No incluye IVA
 	total = models.DecimalField('TOTAL', max_digits=5, decimal_places=2, blank=True, null=False, validators =
-			[MinValueValidator(0)], default=0)
+			[MinValueValidator(0)], default=0)  # Incluye IVA
 	anulado = models.BooleanField()
 	estado = models.CharField(max_length=2, choices=ESTADO_CHOICES, default=None, blank=False, null=False)
 
@@ -34,6 +38,7 @@ class LineaDeProducto(models.Model):
 	venta = models.ForeignKey(Venta, null=False, on_delete=models.CASCADE, blank=False)
 	producto = models.ForeignKey(Producto, null=False, on_delete=models.CASCADE, blank=False)
 	cantidad = models.IntegerField('Cantidad', blank=False, null=False, validators=[MinValueValidator(1)])
+	colaborador = models.ForeignKey(Colaborador, null=False, on_delete=models.CASCADE, blank=False)
 	descuento = models.IntegerField('Descuento (%)', blank=False, null=False, validators=[MinValueValidator(0)])
 	nuevoPrecio = models.DecimalField('Nuevo precio', max_digits=10, decimal_places=2, blank=False, null=False)
 	subtotal = models.DecimalField('Subtotal', max_digits=10, decimal_places=2, blank=False, null=False)

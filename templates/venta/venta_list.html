@@ -58,7 +58,7 @@
                             <td>{{ v.cliente }}</td>
                             <td>{{ v.total }}</td>
                             <td style="text-align: center;">
-                                <a href="{% url 'venta:venta_show' v.id %}"  data-toggle="tooltip" data-placement="top" title="Ver">
+                                <a data-toggle="modal" data-target=".bd-example-modal-lg" href="{% url 'venta:venta_show' v.id %}"  data-toggle="tooltip" data-placement="top" title="Ver">
                                     <i class="fas fa-eye"></i>
                                 </a>
                             </td>
@@ -86,7 +86,27 @@
         </div>
     {% endif %}
 
+<!-- Extra large modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-xl">Extra large modal</button>
 
+<div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      {% include "venta/pruebaModal.html" %}
+    </div>
+  </div>
+</div>
+
+<!-- Large modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Large modal</button>
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+            {% include "venta/pruebaModal.html" %}
+    </div>
+  </div>
+</div>
 
 
 <!-- PRUEBA DE DATATABLE

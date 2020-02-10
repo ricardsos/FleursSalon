@@ -1,93 +1,116 @@
-
 <form action="" method="post">{% csrf_token %}
-    <div class="form-row">
-
-        <div class="col-md-4 mb-3">
-          <label for="servicio">Servicio</label>
-          <select class="custom-select" id="servicio" name="servicio" required>
-            <option selected disabled value="">Seleccionar</option>
-            {% for s in servicios %}
-            <option value="{{ s.nombre }}">{{ s.nombre }}</option>
-            {% endfor %}
-          </select>
-
-        </div>
-
-        <div class="col-md-4 mb-3">
-          <label for="colaborador">Colaborador</label>
-          <select class="custom-select" id="colaborador" name="colaborador" required>
-            <option selected disabled value="">Seleccionar</option>
-            {% for c in colaboradores %}
-            <option value="{{ c.last_name }}">{{ c.first_name }} {{ c.last_name }}</option>
-            {% endfor %}
-          </select>
-
-        </div>
-
-    </div>
-
-
-    <div class="form-row">
-        <div class="col-md-3 mb-3">
-          <label for="precio">Precio ($)</label>
-          <input type="text" class="form-control" id="precio" name="precio" onchange="hacerDescuento()" required>
-        </div>
-
-
-        <div class="mb-3 col-md-2">
-          <label for="descuento">Descuento (%)</label>
-          <div class="input-group-prepend">
-            <div class="input-group-text">
-              <input type="checkbox" aria-label="Checkbox for following text input" onClick="habilitar()" >
-            </div>
-              <input type="text" class="form-control" aria-label="Text input with checkbox" value="0"
-                      onchange="hacerDescuento()" name="descuento" id="descuento">
-          </div>
-        </div>
-
-        <div class="col-md-3 mb-3">
-          <label for="nuevoprecio">Nuevo Precio ($)</label>
-          <input type="text" class="form-control" id="nuevoprecio" name="nuevoprecio"  required>
-        </div>
-
-    </div>
-
-
-  <div class="form-row">
-      <div class="col-md-8 mb-3">
-        <label for="descripcion">Descripción</label>
-        <textarea class="form-control" id="descripcion" name="descripcion" rows="3" required></textarea>
-      </div>
-  </div>
-
-  <button class="btn btn-primary" type="submit">Agregar</button>
-    <a class="btn btn-outline-danger" href="{% url 'venta:venta_edit' venta.id %}" role="button">Atrás</a>
+    <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <div class="alert alert-primary" role="alert">
+                  Mostrando la venta del cliente "{{ venta.cliente }}"
+                </div>
+                Código
+                <span class="badge badge-primary badge-pill">{{ venta.codigo }}</span>
+                Fecha
+                <span class="badge badge-primary badge-pill">{{ venta.fecha }}</span>
+                Cliente
+                <span class="badge badge-primary badge-pill">{{ venta.cliente }}</span>
+                TOTAL
+                <span class="badge badge-primary badge-pill">$ {{ venta.total }}</span>
+            </li>
+        <li class="list-group-item">
+            <a class="btn btn-outline-danger" href="{% url 'venta:venta_list' %}" role="button">Atrás</a>
+        </li>
+    </ul>
 </form>
 
-<script>
-    function habilitar(){
-        var desc = document.getElementById('descuento');
-        desc.disabled = !desc.disabled
-    }
+{% if lineasServicio %}
+    <div class="card mb-3">
+          <div class="card-header">
+            <i class="fas fa-cut"></i>
+            Servicios</div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover table-sm" id="dataTableServicio" width="100%" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th>Servicio</th>
+                    <th>Colaborador</th>
+                    <th>Precio</th>
+                    <th>Desc (%)</th>
+                    <th>Precio final</th>
+                    <th>Descripción</th>
+                  </tr>
+                </thead>
+                <tfoot>
+                  <tr>
+                    <th>Servicio</th>
+                    <th>Colaborador</th>
+                    <th>Precio</th>
+                    <th>Desc (%)</th>
+                    <th>Precio final</th>
+                    <th>Descripción</th>
+                  </tr>
+                </tfoot>
+                <tbody>
+                {% for ls in lineasServicio %}
+                  <tr>
+                    <td>{{ ls.servicio }}</td>
+                    <td>{{ ls.colaborador.first_name }} {{ ls.colaborador.last_name }}</td>
+                    <td>{{ ls.precio }}</td>
+                    <td>{{ ls.descuento }}</td>
+                    <td>{{ ls.nuevoPrecio }}</td>
+                    <td>{{ ls.descripcion }}</td>
 
-    function hacerDescuento(){
-        var precio = document.getElementById('precio');
-        var desc = document.getElementById('descuento');
-        var nuevoPrecio = document.getElementById('nuevoprecio');
+                  </tr>
+                {% endfor %}
 
-        console.log(precio.value)
-        console.log(desc.value)
-        console.log(nuevoPrecio.value)
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card-footer small text-muted">Updated yesterday at 11:59 PM </div>
+        </div>
+{% endif  %}
 
-
-        if(desc.value.length != 0 && precio.value.length != 0){
-            n = precio.value - precio.value * desc.value / 100;
-            nuevoPrecio.value = parseFloat(n).toFixed(2);
-
-        }
-
-        if(precio.value.length != 0){
-            precio.value = parseFloat(precio.value).toFixed(2);
-        }
-    }
-</script>
+{% if lineasProducto %}
+    <div class="card mb-3">
+      <div class="card-header">
+          <i class="fas fa-box"></i>
+        Productos</div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover table-sm" id="dataTableProducto" width="100%" cellspacing="0">
+            <thead>
+              <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio Uni</th>
+                <th>Subtotal</th>
+                <th>Desc (%)</th>
+                <th>Subtotal final</th>
+              </tr>
+            </thead>
+            <tfoot>
+              <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio Uni</th>
+                <th>Subtotal</th>
+                <th>Desc (%)</th>
+                <th>Subtotal final</th>
+              </tr>
+            </tfoot>
+            <tbody>
+            {% for lp in lineasProducto %}
+                <tr>
+                    <td>{{ lp.producto.nombre }}</td>
+                    <td>{{ lp.cantidad }}</td>
+                    <td>{{ lp.producto.precio }}</td>
+                    <td>{{ lp.subtotal }}</td>
+                    <td>{{ lp.descuento }}</td>
+                    <td>{{ lp.nuevoPrecio }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+    </div>
+{% endif  %}
