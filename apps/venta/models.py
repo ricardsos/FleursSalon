@@ -40,8 +40,8 @@ class LineaDeProducto(models.Model):
 	cantidad = models.IntegerField('Cantidad', blank=False, null=False, validators=[MinValueValidator(1)])
 	colaborador = models.ForeignKey(Colaborador, null=False, on_delete=models.CASCADE, blank=False)
 	descuento = models.IntegerField('Descuento (%)', blank=False, null=False, validators=[MinValueValidator(0)])
-	nuevoPrecio = models.DecimalField('Nuevo precio', max_digits=10, decimal_places=2, blank=False, null=False)
 	subtotal = models.DecimalField('Subtotal', max_digits=10, decimal_places=2, blank=False, null=False)
+	nuevoSubtotal = models.DecimalField('Nuevo subtotal', max_digits=10, decimal_places=2, blank=False, null=False)
 
 	def __str__(self):
 		return 'CÓDIGO VENTA: {},  Producto: {}'.format(self.venta.codigo, self.producto.nombre)

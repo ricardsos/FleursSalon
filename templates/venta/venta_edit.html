@@ -107,8 +107,9 @@
                 <thead>
                   <tr>
                     <th>Producto</th>
-                    <th>Cantidad</th>
-                    <th>Precio Uni</th>
+                    <th>Colaborador</th>
+                    <th>Cant</th>
+                    <th>Precio U</th>
                     <th>Subtotal</th>
                     <th>Desc (%)</th>
                     <th>Subtotal final</th>
@@ -119,8 +120,9 @@
                 <tfoot>
                   <tr>
                     <th>Producto</th>
-                    <th>Cantidad</th>
-                    <th>Precio Uni</th>
+                    <th>Colaborador</th>
+                    <th>Cant</th>
+                    <th>Precio U</th>
                     <th>Subtotal</th>
                     <th>Desc (%)</th>
                     <th>Subtotal final</th>
@@ -132,6 +134,7 @@
                 {% for lp in lineasProducto %}
                     <tr>
                         <td>{{ lp.producto.nombre }}</td>
+                        <td>{{ lp.colaborador }}</td>
                         <td>{{ lp.cantidad }}</td>
                         <td>{{ lp.producto.precio }}</td>
                                                 <td>{{ lp.subtotal }}</td>

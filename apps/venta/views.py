@@ -80,7 +80,8 @@ def linea_venta_servicio(request,id_venta,servicion,colaboradorn,precios,descrip
 	lineaServicio.save()
 	return HttpResponse('')
 
-def linea_venta_producto(request,id_venta,producton,cantidad,nuevoprecio,sbtotal):
+
+def linea_venta_producto(request, id_venta, producton, cantidad, nuevoprecio, sbtotal):
 	lineaProducto = LineaDeProducto()
 	venta = Venta.objects.get(id=id_venta)
 	lineaProducto.venta = venta
@@ -480,6 +481,7 @@ def lineaProducto_edit(request, id):
 def lineaProducto_create_edit(request, id):
 	productos = Producto.objects.all()
 	venta = Venta.objects.get(id=id)
+	colaboradores = Colaborador.objects.all()
 	totalServicio = 0
 	totalProducto = 0
 	if request.method == 'POST':
@@ -489,10 +491,13 @@ def lineaProducto_create_edit(request, id):
 		producto = Producto.objects.get(id=request.POST.get('producto'))
 		lineaProducto.producto = producto
 
+		colaborador = Colaborador.objects.get(id=request.POST.get('colaborador'))
+		lineaProducto.colaborador = colaborador
+
 		lineaProducto.cantidad = request.POST.get('cantidad')
 		lineaProducto.descuento = request.POST.get('descuento')
-		lineaProducto.nuevoPrecio = request.POST.get('nuevoprecio')
 		lineaProducto.subtotal = request.POST.get('subtotal')
+		lineaProducto.nuevoSubtotal = request.POST.get('subtotalFinal')
 		lineaProducto.save()
 
 		# Actualizar el total del la venta
@@ -503,13 +508,14 @@ def lineaProducto_create_edit(request, id):
 			totalServicio += lineaServicio.nuevoPrecio
 
 		for LineaProducto in LineasProducto:
-			totalProducto += LineaProducto.nuevoPrecio
+			totalProducto += LineaProducto.nuevoSubtotal
 
 		venta.total = totalServicio + totalProducto
 		venta.save()
 		return redirect('venta:venta_edit', id=id)
 	return render(request, template_name='venta/lineaProducto_create_edit.html', context={'venta': venta,
-																						'productos': productos})
+																						'productos': productos,
+																				'colaboradores': colaboradores})
 
 
 def lineaProducto_edit_edit(request, id):
@@ -526,7 +532,7 @@ def lineaProducto_edit_edit(request, id):
 
 		lineaProducto.cantidad = request.POST.get('cantidad')
 		lineaProducto.descuento = request.POST.get('descuento')
-		lineaProducto.nuevoPrecio = request.POST.get('nuevoprecio')
+		lineaProducto.nuevoSubtotal = request.POST.get('nuevoSubtotal')
 		lineaProducto.subtotal = request.POST.get('subtotal')
 		lineaProducto.save()
 
@@ -538,7 +544,7 @@ def lineaProducto_edit_edit(request, id):
 			totalServicio += lineaServicio.nuevoPrecio
 
 		for LineaProducto in LineasProducto:
-			totalProducto += LineaProducto.nuevoPrecio
+			totalProducto += LineaProducto.nuevoSubtotal
 
 		venta.total = totalServicio + totalProducto
 		venta.save()
@@ -565,7 +571,7 @@ def lineaProducto_delete_edit(request, id):
 			totalServicio += lineaServicio.nuevoPrecio
 
 		for LineaProducto in LineasProducto:
-			totalProducto += LineaProducto.nuevoPrecio
+			totalProducto += LineaProducto.nuevoSubtotal
 
 		venta.total = totalServicio + totalProducto
 		venta.save()

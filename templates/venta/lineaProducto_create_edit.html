@@ -29,15 +29,16 @@
                 </select>
         </div>
 
-        <div class="col-md-2 mb-3">
-            <label for="cantidad">Cantidad</label>
-                <input type="text" class="form-control" name="cantidad" id="cantidad" value="" onchange="obtenerPrecio(); hacerDescuento()" required>
+        <div class="col-md-4 mb-3">
+          <label for="colaborador">Colaborador</label>
+          <select class="custom-select" id="colaborador" name="colaborador" required>
+            <option selected disabled value="">Seleccionar</option>
+            {% for c in colaboradores %}
+            <option value="{{ c.id }}">{{ c.first_name }} {{ c.last_name }}</option>
+            {% endfor %}
+          </select>
         </div>
 
-              <div class="col-md-2 mb-3">
-          <label for="subtotal">Subtotal ($)</label>
-          <input type="text" class="form-control" id="subtotal" name="subtotal" value="" required>
-        </div>
     </div>
 
 
@@ -47,32 +48,49 @@
           <input type="text" class="form-control" id="precio" name="precio" value="" required disabled>
         </div>
 
+        <div class="col-md-2 mb-3">
+            <label for="cantidad">Cantidad</label>
+            <input type="text" class="form-control" name="cantidad" id="cantidad" value="" onchange="obtenerPrecio(); hacerDescuento()" required>
+        </div>
 
+
+        <div class="col-md-3 mb-3">
+            <label for="subtotal2">Subtotal ($)</label>
+            <input type="text" class="form-control" id="subtotal2" name="subtotal2" value="" required disabled>
+            <input type="text" style="display: none" id="subtotal" name="subtotal">
+        </div>
+
+    </div>
+
+    <div class="form-row">
         <div class="mb-3 col-md-2">
-          <label for="descuento">Descuento (%)</label>
+          <label for="descuento2">Descuento (%)</label>
           <div class="input-group-prepend">
             <div class="input-group-text">
               <input type="checkbox" aria-label="Checkbox for following text input" onClick="habilitar()" >
             </div>
               <input type="text" class="form-control" aria-label="Text input with checkbox" value="0"
-                     onchange="hacerDescuento()" name="descuento" id="descuento" required>
+                     onchange="hacerDescuento()" name="descuento2" id="descuento2" required disabled>
+
           </div>
+            <input type="text" style="display: none" id="descuento" name="descuento" value="0">
         </div>
 
         <div class="col-md-3 mb-3">
-          <label for="nuevoprecio">Nuevo Subtotal ($)</label>
-          <input type="text" class="form-control" id="nuevoprecio" name="nuevoprecio" value=""  required>
+            <label for="subtotalFinal2">Subtotal final ($)</label>
+            <input type="text" class="form-control" id="subtotalFinal2" name="subtotalFinal2" value=""  required disabled>
+            <input type="text" style="display: " id="subtotalFinal" name="subtotalFinal" value="">
         </div>
     </div>
-
     <button class="btn btn-primary" type="submit">Agregar</button>
     <a class="btn btn-outline-danger" href="{% url 'venta:venta_edit' venta.id %}" role="button">Atrás</a>
 </form>
 <script>
     function habilitar(){
-        var desc = document.getElementById('descuento');
+        var desc = document.getElementById('descuento2');
         desc.disabled = !desc.disabled
     }
+
     //Obtener subtotal
     function obtenerPrecio(){
         var productos = document.getElementById('producto');
@@ -82,10 +100,11 @@
         precio.value = precioProducto
 
         var cantidad = document.getElementById('cantidad');
+        var subtotal2 = document.getElementById('subtotal2');
         var subtotal = document.getElementById('subtotal');
 
-
         if(cantidad.value.length != 0 && precio.value.length != 0){
+            subtotal2.value = parseFloat(cantidad.value * precioProducto).toFixed(2);
             subtotal.value = parseFloat(cantidad.value * precioProducto).toFixed(2);
                     console.log('IF')
         }
@@ -96,16 +115,24 @@
     }
 
     function hacerDescuento(){
+        var desc2 = document.getElementById('descuento2');
+        var subtotalFinal2 = document.getElementById('subtotalFinal2');
+        var subtotal2 = document.getElementById('subtotal2');
+
         var desc = document.getElementById('descuento');
-        var nuevoPrecio = document.getElementById('nuevoprecio');
+        desc.value = desc2.value;
+
         var subtotal = document.getElementById('subtotal');
 
-        console.log(desc.value)
-        console.log(nuevoPrecio.value)
-        console.log(subtotal.value)
+        //console.log('Descuento2', desc2.value);
+        //console.log('Descuento', desc.value);
 
-        if(desc.value.length != 0 && subtotal.value.length != 0){
-            nuevoPrecio.value = parseFloat(subtotal.value - subtotal.value * desc.value / 100).toFixed(2);
+        //console.log(subtotalFinal2.value);
+        //console.log(subtotal2.value);
+
+        if(desc2.value.length != 0 && subtotal2.value.length != 0){
+            subtotalFinal2.value = parseFloat(subtotal2.value - subtotal2.value * desc2.value / 100).toFixed(2);
+            subtotalFinal.value = parseFloat(subtotal2.value - subtotal2.value * desc2.value / 100).toFixed(2);
         }
     }
 
